@@ -16,9 +16,8 @@ export PATH="$(brew --prefix grep)/libexec/gnubin:$PATH"
 # Add X11
 export PATH="/opt/X11/bin:$PATH"
 
-# GO
-export GOPATH="$HOME/go"
-export PATH="$PATH:$GOPATH/bin"
+# Go
+export PATH="$HOME/go/bin:$PATH"
 
 # Cargo
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -48,7 +47,6 @@ zplug "MikeDacre/careful_rm"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-completions", defer:2
-zplug "denysdovhan/spaceship-prompt", as:theme
 
 zplug load
 
@@ -100,9 +98,6 @@ export HOMEBREW_NO_ANALYTICS=1
 # Homebrew will not auto-update before running `brew install`, `brew upgrade` or `brew tap`.
 export HOMEBREW_NO_AUTO_UPDATE=1
 
-# Node dev
-export NODE_ENV=development
-
 # Stop z polluting the home dir
 export _Z_DATA="$HOME/.zdata/.z"
 
@@ -144,42 +139,8 @@ command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -C {} | he
 export NVS_HOME="$HOME/.nvs"
 [ -s "$NVS_HOME/nvs.sh" ] && . "$NVS_HOME/nvs.sh"
 
-# Theme
-# https://github.com/denysdovhan/spaceship-prompt
-
-# Git info
-# https://github.com/olivierverdier/zsh-git-prompt
-
-ZSH_GIT_PROMPT="$HOME/zsh-git-prompt/zshrc.sh"
-CUSTOM_GIT="$HOME/dotfiles/scripts/custom_git.zsh"
-
-[ -s $ZSH_GIT_PROMPT ] && source $ZSH_GIT_PROMPT
-[ -s $CUSTOM_GIT ] && source $CUSTOM_GIT
-
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}✓%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_PREFIX=" "
-ZSH_THEME_GIT_PROMPT_SUFFIX=" "
-ZSH_THEME_GIT_PROMPT_SEPARATOR=" "
-ZSH_THEME_GIT_PROMPT_CHANGED="%{$fg[red]%}%{●%G%}"
-ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[blue]%}%{✚%G%}"
-ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[blue]%}◒"
-
-# Theme settings
-SPACESHIP_DIR_COLOR="yellow"
-SPACESHIP_USER_SHOW="true"
-SPACESHIP_CHAR_COLOR_SUCCESS="white"
-SPACESHIP_CHAR_COLOR_FAILURE="white"
-
-SPACESHIP_PROMPT_ORDER=(
-  user          # Username section
-  dir           # Current directory section
-  host          # Hostname section
-  custom_git
-  line_sep      # Line break
-  vi_mode       # Vi-mode indicator
-  jobs          # Background jobs indicator
-  char          # Prompt character
-)
+# Prompt
+eval "$(starship init zsh)"
 
 # Misc
 

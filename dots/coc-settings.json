@@ -1,20 +1,18 @@
 {
-  "codeLens.enable": true,
-  "diagnostic.errorSign": "x",
-  "diagnostic.infoSign": "~",
-  "eslint.autoFixOnSave": true,
-  "css.lint.unknownAtRules": "ignore",
-  "eslint.filetypes": [
-    "javascript",
-    "javascript.jsx",
-    "typescript",
-    "typescriptreact",
-    "javascriptreact"
-  ],
-  "suggest.timeout": 5000,
-  "typescript.suggestionActions.enabled": false,
-  "typescript.referencesCodeLens.enable": false,
-  "javascript.suggestionActions.enabled": false,
-  "javascript.referencesCodeLens.enable": false,
-  "coc.preferences.formatOnType": true
+  "languageserver": {
+    "go": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "trace.server": "verbose",
+      "filetypes": ["go"]
+    },
+    "sorbet": {
+      "command": "srb",
+      "args": ["tc", "--lsp", "--enable-all-experimental-lsp-features"],
+      "filetypes": ["ruby"],
+      "rootPatterns": ["sorbet/config"],
+      "initializationOptions": {},
+      "settings": {}
+    }
+  }
 }

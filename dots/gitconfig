@@ -140,3 +140,8 @@
 	command = git_diff_image
 [pull]
 	rebase = false
+[user]
+	email = amatabar@cisco.com
+	name = Albert Matabaro
+[rerere]
+	enabled = true

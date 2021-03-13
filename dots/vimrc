@@ -34,10 +34,13 @@ Plug 'junegunn/vim-slash'
 " File management
 " ------------------------------------------------------------------------------
 
-" File browser
-Plug 'mcchrish/nnn.vim'
 " Undo visualise
 Plug 'mbbill/undotree'
+" Navigate and manipulate files in a tree view.
+Plug 'lambdalisue/fern.vim'
+
+" Fix CursorHold Performance
+Plug 'antoinemadec/FixCursorHold.nvim'
 
 " Buffers
 " ------------------------------------------------------------------------------
@@ -81,6 +84,10 @@ Plug 'dietsche/vim-lastplace'
 Plug 'yssl/QFEnter'
 " Move blocks of code with ALT+j/k
 Plug 'matze/vim-move'
+" Comments
+Plug 'tpope/vim-commentary'
+" End wise
+Plug 'tpope/vim-endwise'
 
 " Text objects
 " ------------------------------------------------------------------------------
@@ -112,8 +119,6 @@ Plug 'ntpeters/vim-better-whitespace'
 " Refactoring
 " ------------------------------------------------------------------------------
 
-" Split and join HTML tags, JS objects etc
-Plug 'AndrewRadev/splitjoin.vim'
 " Make it easy to add/remove/change brackets, quotes etc
 Plug 'tpope/vim-surround'
 
@@ -160,17 +165,16 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/gv.vim'
 
-" HTML/CSS
+" Golang
 " ------------------------------------------------------------------------------
 
-" Easy HTML and CSS generation
-Plug 'mattn/emmet-vim'
-" Automatically add a closing HTML tag
-Plug 'alvan/vim-closetag'
-" Better Scss highlighting than polyglot
-Plug 'tpope/vim-haml'
-" CSS highlight
-Plug 'chrisbra/Colorizer'
+" Everything
+Plug 'fatih/vim-go'
+
+" Ruby - Rails
+" -------------------------------------------------------------------------------
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-rails'
 
 " JavaScript
 " ------------------------------------------------------------------------------
@@ -179,16 +183,9 @@ Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
 
 " Autocomplete & linting
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-pairs', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
-Plug 'bmatcuk/coc-stylelintplus', {'do': 'yarn install --frozen-lockfile'}
-Plug 'antonk52/coc-cssmodules', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile', 'for': 'yaml'}
-Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
 
 call plug#end()
@@ -205,12 +202,15 @@ endfunction
 set background=dark
 silent! colorscheme material
 
+" Disable netrw
+let loaded_netrwPlugin = 1
+
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags='li\|p'
 
-" Set <space> to leader
-let mapleader=' '
-let maplocalleader='\'
+" Set <,> to leader
+let mapleader=','
+let maplocalleader=','
 
 " Turn off swapfiles
 set noswapfile
@@ -380,19 +380,6 @@ set relativenumber
 set suffixesadd+=.css,index.css,.js,.jsx,.scss
 set path+=.,src
 
-" https://damien.pobel.fr/post/configure-neovim-vim-gf-javascript-import/
-function! LoadMainNodeModule(fname)
-  let nodeModules = "./node_modules/"
-  let packageJsonPath = nodeModules . a:fname . "/package.json"
-  if filereadable(packageJsonPath)
-    return nodeModules . a:fname . "/" . json_decode(join(readfile(packageJsonPath))).main
-  else
-    return nodeModules . a:fname
-  endif
-endfunction
-
-set includeexpr=LoadMainNodeModule(v:fname)
-
 " Start scrolling before cursor gets to the edge
 set scrolloff=3
 set sidescrolloff=15
@@ -491,13 +478,6 @@ if s:has_plugin('vim-textobj-entire')
   omap iE <Plug>(textobj-entire-i)
 endif
 
-if s:has_plugin('ultisnips')
-  let g:UltiSnipsExpandTrigger="<tab>"
-  let g:UltiSnipsJumpForwardTrigger="<tab>"
-  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-  let g:UltiSnipsSnippetDirectories=["UltiSnips"]
-endif
-
 if s:has_plugin('coc.nvim')
   " Remap keys for gotos
   nmap <silent> <leader>dr <Plug>(coc-references)
@@ -511,6 +491,8 @@ if s:has_plugin('coc.nvim')
 
   nmap <silent> <leader>p :Prettier<cr>
 
+  let g:coc_global_extensions = ['coc-solargraph']
+
   " restart coc because it breaks so often
   nmap <silent> <leader>r :CocRestart<cr>
 
@@ -521,8 +503,22 @@ if s:has_plugin('coc.nvim')
   command! -nargs=0 Prettier :CocCommand prettier.formatFile
   nmap <silent> <leader>uf :CocList snippets<cr>
 
-  inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-        \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+  " Use tab for trigger completion with characters ahead and navigate.
+  " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+  " other plugin before putting this into your config.
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ coc#refresh()
+  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+  endfunction
+
+  " Use <c-space> to trigger completion.
+  inoremap <silent><expr> <c-space> coc#refresh()
 
   " documentation popup
   nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -544,6 +540,39 @@ if s:has_plugin('bufexplorer')
   let g:bufExplorerDisableDefaultKeyMapping = 1
   let g:bufExplorerShowNoName = 1
   nnoremap <leader>b :BufExplorer<cr>
+endif
+
+if s:has_plugin('vim-go')
+  let g:go_fmt_command = "goimports"
+  let g:go_fmt_autosave = 1
+  let g:go_fmt_fail_silently = 1
+  let g:go_debug_windows = {
+        \ 'vars':  'leftabove 35vnew',
+        \ 'stack': 'botright 10new',
+        \ }
+
+  let g:go_test_show_name = 1
+  let g:go_list_type = "quickfix"
+
+  let g:go_autodetect_gopath = 1
+  let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+  let g:go_metalinter_enabled = ['vet', 'golint']
+
+  let g:go_gopls_complete_unimported = 1
+
+  " 2 is for errors and warnings
+  let g:go_diagnostics_level = 2
+  let g:go_doc_popup_window = 1
+
+  let g:go_imports_mode="gopls"
+  let g:go_def_mode="gopls"
+  let g:go_info_mode="gopls"
+  let g:go_imports_autosave=1
+
+  let g:go_highlight_build_constraints = 1
+  let g:go_highlight_operators = 1
+
+  let g:go_fold_enable = []
 endif
 
 if s:has_plugin('vim-easyclip')
@@ -568,11 +597,6 @@ endif
 
 if s:has_plugin('vim-bufonly')
   nnoremap <leader>B :BufOnly<cr>
-endif
-
-if s:has_plugin('vim-javascript')
-  let g:javascript_plugin_flow=1
-  let g:javascript_plugin_jsdoc=1
 endif
 
 if s:has_plugin('vim-grepper')
@@ -654,14 +678,6 @@ if s:has_plugin('taboo.vim')
   nnoremap tr :TabooRename<space>
 endif
 
-if s:has_plugin('nnn.vim')
-  nnoremap _ :NnnPicker %:p:h<cr>
-  let g:nnn#command = 'nnn -d -H'
-  let g:nnn#action = {
-        \ '<c-x>': 'split',
-        \ '<c-v>': 'vsplit' }
-endif
-
 if s:has_plugin('gv.vim')
   nnoremap <c-g> :GV!<cr>
 endif
@@ -671,6 +687,7 @@ if s:has_plugin('fzf.vim')
   let g:fzf_commits_log_options = '--color --graph --pretty=format:"%C(yellow)%h%Creset -%C(auto)%d%Creset %s %C(bold blue)(%cr) %Cred<%an>%Creset" --abbrev-commit'
 
   nnoremap <c-p> :FZF<cr>
+  nnoremap <leader>, :FZF<cr>
   nnoremap <c-i> :Buffers<cr>
   nnoremap <c-t> :Lines<cr>
   nnoremap <c-space> :Rg!<cr>
@@ -686,27 +703,27 @@ if s:has_plugin('fzf.vim')
     call fzf#vim#ag(query, '--hidden --ignore .git', a:bang ? {} : {'down': '40%'})
   endfunction
 
-command! -bang -nargs=* Rg call fzf#vim#grep('rg --column --pretty --no-heading '.shellescape(<q-args>), 1, <bang>0)
-command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+  command! -bang -nargs=* Rg call fzf#vim#grep('rg --column --pretty --no-heading '.shellescape(<q-args>), 1, <bang>0)
+  command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
   if has('autocmd')
     autocmd VimEnter * command! -nargs=* -bang Ag call s:ag_with_opts(<q-args>, <bang>0)
   endif
 
   let g:fzf_colors =
-  \ { 'fg':      ['fg', 'Normal'],
-    \ 'bg':      ['bg', 'Normal'],
-    \ 'hl':      ['fg', 'Boolean'],
-    \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-    \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-    \ 'hl+':     ['fg', 'Statement'],
-    \ 'info':    ['fg', 'PreProc'],
-    \ 'border':  ['fg', 'Ignore'],
-    \ 'prompt':  ['fg', 'Conditional'],
-    \ 'pointer': ['fg', 'Exception'],
-    \ 'marker':  ['fg', 'Keyword'],
-    \ 'spinner': ['fg', 'Label'],
-    \ 'header':  ['fg', 'Comment'] }
+        \ { 'fg':      ['fg', 'Normal'],
+        \ 'bg':      ['bg', 'Normal'],
+        \ 'hl':      ['fg', 'Boolean'],
+        \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+        \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+        \ 'hl+':     ['fg', 'Statement'],
+        \ 'info':    ['fg', 'PreProc'],
+        \ 'border':  ['fg', 'Ignore'],
+        \ 'prompt':  ['fg', 'Conditional'],
+        \ 'pointer': ['fg', 'Exception'],
+        \ 'marker':  ['fg', 'Keyword'],
+        \ 'spinner': ['fg', 'Label'],
+        \ 'header':  ['fg', 'Comment'] }
 endif
 
 if s:has_plugin('ListToggle')
@@ -756,14 +773,75 @@ if s:has_plugin('vim-gitgutter')
   command! -nargs=0 Revert :GitGutterUndoHunk
 endif
 
-if s:has_plugin('emmet-vim')
-  imap hh <plug>(emmet-expand-abbr)
+if s:has_plugin('fern.vim')
+  " Disable netrw.
+  let g:loaded_netrw  = 1
+  let g:loaded_netrwPlugin = 1
+  let g:loaded_netrwSettings = 1
+  let g:loaded_netrwFileHandlers = 1
+
+  augroup my-fern-hijack
+    autocmd!
+    autocmd BufEnter * ++nested call s:hijack_directory()
+  augroup END
+
+  function! s:hijack_directory() abort
+    let path = expand('%:p')
+    if !isdirectory(path)
+      return
+    endif
+    bwipeout %
+    execute printf('Fern %s', fnameescape(path))
+  endfunction
+
+  " Custom settings and mappings.
+  let g:fern#disable_default_mappings = 1
+  let g:fern#disable_default_mappings   = 1
+  let g:fern#disable_drawer_auto_quit   = 1
+  let g:fern#disable_viewer_hide_cursor = 1
+  let g:fern#mark_symbol                       = '●'
+  let g:fern#renderer#default#collapsed_symbol = '▷ '
+  let g:fern#renderer#default#expanded_symbol  = '▼ '
+  let g:fern#renderer#default#leading          = ' '
+  let g:fern#renderer#default#leaf_symbol      = ' '
+  let g:fern#renderer#default#root_symbol      = '~ '
+
+
+  noremap <silent> <Leader>f :Fern . -drawer -reveal=% -toggle -width=35<CR><C-w>=
+  noremap <silent> <Leader>. :Fern %:h -drawer -width=35<CR><C-w>=
+
+  function! FernInit() abort
+    nmap <buffer><expr>
+          \ <Plug>(fern-my-open-expand-collapse)
+          \ fern#smart#leaf(
+          \   "\<Plug>(fern-action-open:select)",
+          \   "\<Plug>(fern-action-expand)",
+          \   "\<Plug>(fern-action-collapse)",
+          \ )
+    nmap <buffer> <CR> <Plug>(fern-my-open-expand-collapse)
+    nmap <buffer> <2-LeftMouse> <Plug>(fern-my-open-expand-collapse)
+    nmap <buffer> n <Plug>(fern-action-new-path)
+    nmap <buffer> d <Plug>(fern-action-remove)
+    nmap <buffer> m <Plug>(fern-action-move)
+    nmap <buffer> M <Plug>(fern-action-rename)
+    nmap <buffer> h <Plug>(fern-action-hidden-toggle)
+    nmap <buffer> r <Plug>(fern-action-reload)
+    nmap <buffer> s <Plug>(fern-action-open:split)
+    nmap <buffer> v <Plug>(fern-action-open:vsplit)
+    nmap <buffer><nowait> < <Plug>(fern-action-leave)
+    nmap <buffer><nowait> > <Plug>(fern-action-enter)
+  endfunction
+
+  augroup FernGroup
+    autocmd!
+    autocmd FileType fern call FernInit()
+  augroup END
 endif
 
 " Output the current syntax group
 nnoremap <f10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>
+      \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+      \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>
 
 " Automatic commands
 " ------------------------------------------------------------------------------
@@ -790,13 +868,6 @@ augroup file-types
   autocmd FileType gitcommit setlocal textwidth=72
   autocmd FileType gitcommit setlocal spell
 
-  " Allow stylesheets to autocomplete hyphenated words
-  autocmd FileType css,scss,sass setlocal iskeyword+=-
-
-  autocmd BufEnter,BufLeave *.css,*.scss,*.sass :ColorHighlight!
-
-  " Use JS snippets in TS
-  autocmd FileType typescript,typescript.tsx,typescriptreact call UltiSnips#AddFiletypes('javascript.typescript')
 augroup END
 
 

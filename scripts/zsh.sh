@@ -14,14 +14,3 @@ if echo $SHELL | grep /bin/bash > /dev/null 2>&1; then
 else
   echo "zsh is already the default shell ..."
 fi
-
-# Install zsh-git-prompt
-# https://github.com/olivierverdier/zsh-git-prompt
-if [ ! -d $HOME/zsh-git-prompt ]; then
-  echo "Installing zsh-git-prompt ..."
-  pushd ~
-  git clone https://github.com/olivierverdier/zsh-git-prompt.git
-  popd
-else
-  echo "zsh-git-prompt already installed ..."
-fi

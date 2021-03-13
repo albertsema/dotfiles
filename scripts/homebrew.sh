@@ -92,5 +92,6 @@ brew install p7zip
 brew install python
 brew install redis
 brew install youtube-dl
+brew install starship
 
 brew cleanup
