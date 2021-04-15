@@ -42,6 +42,10 @@ Plug 'lambdalisue/fern.vim'
 " Fix CursorHold Performance
 Plug 'antoinemadec/FixCursorHold.nvim'
 
+" Rainbow paratheses
+Plug 'luochen1990/rainbow'
+let g:rainbow_active = 1
+
 " Buffers
 " ------------------------------------------------------------------------------
 
@@ -169,7 +173,7 @@ Plug 'junegunn/gv.vim'
 " ------------------------------------------------------------------------------
 
 " Everything
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " Ruby - Rails
 " -------------------------------------------------------------------------------

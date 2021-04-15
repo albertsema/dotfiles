@@ -2,6 +2,8 @@
 mkdir -p "$HOME/.config/nvim/"
 ln -sfv "$HOME/.vimrc" "$HOME/.config/nvim/init.vim"
 
+ln -sfv "$HOME/.coc-settings.json" "$HOME/.config/nvim/coc-settings.json"
+
 # Neovim
 if [ -e "$HOME/.config/nvim/autoload/plug.vim" ]; then
   echo "vim plug exists for neovim, skipping ..."

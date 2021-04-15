@@ -3,9 +3,6 @@ brew install --cask firefox-developer-edition
 brew install --cask google-chrome
 brew install --cask google-chrome-canary
 
-# Cloud
-brew install --cask google-backup-and-sync
-
 # Media
 brew install --cask spotify
 brew install --cask iina

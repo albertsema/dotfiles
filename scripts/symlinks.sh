@@ -38,13 +38,14 @@ for dotfile in ${dots[*]}; do
 done
 
 # Files that need slightly different symlink
-rm -rf "$HOME/.config/nvim/coc-settings.json"
-[ ! -e "$HOME/.config/nvim/coc-settings.json" ] && ln -sfv $(grealpath coc-settings.json) "$HOME/.config/nvim/coc-settings.json"
-
-[ ! -e "$HOME/.config/starship.toml" ] && ln -sfv $(grealpath starship.toml) "$HOME/.config/starship.toml"
-
 mkdir "$HOME/.ssh"
 [ ! -e "$HOME/.ssh/config" ] && ln -sfv $(grealpath ssh-config) "$HOME/.ssh/config"
+
+# link starship
+ln -sfv $(grealpath starship.toml) "$HOME/.config/starship.toml"
+
+# link coc-settings.json
+ln -sfv $(grealpath coc-settings.json) "$HOME/.config/nvim/coc-settings.json"
 
 popd
 
