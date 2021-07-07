@@ -19,9 +19,9 @@ brew install gnu-sed
 # Replace system curl
 brew install curl
 
-# Install zsh
-brew install zsh
-brew install zplug
+# Install fish
+brew install fish
+curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
 
 # less highlighting
 brew install source-highlight
@@ -33,10 +33,6 @@ brew install wget
 # https://github.com/expo/expo/issues/854#issuecomment-343243804
 brew install watchman
 
-# Diff images on cmd-line - https://github.com/ewanmellor/git-diff-image
-brew install exiftool
-brew install imagemagick
-
 # neovim
 brew install python3
 brew install neovim
@@ -44,8 +40,8 @@ pip3 install neovim
 pip3 install pynvim
 
 # fzf
-brew install fzf
-yes | /usr/local/opt/fzf/install
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
 
 # Search
 brew install the_silver_searcher
@@ -71,18 +67,12 @@ brew install grep
 brew install rbenv
 brew install ruby-build
 
-# Window manager
-brew tap koekeishiya/formulae
-brew install koekeishiya/formulae/skhd --with-logging
-brew install koekeishiya/formulae/yabai
-
 # Install other useful binaries.
 brew install bat
 brew install diff-so-fancy
 brew install fd
 brew install devd
 brew install direnv
-brew install svn
 brew install go
 brew install exa
 brew install nnn
@@ -92,7 +82,6 @@ brew install imageoptim-cli
 brew install p7zip
 brew install python
 brew install redis
-brew install youtube-dl
 
 # Fonts
 brew tap homebrew/cask-fonts

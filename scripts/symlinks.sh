@@ -30,7 +30,6 @@ dots=(
   tmuxline_snapshot
   vimrc
   wgetrc
-  zshrc
 )
 
 for dotfile in ${dots[*]}; do

@@ -151,7 +151,6 @@ Plug 'epilande/vim-react-snippets'
 Plug 'epilande/vim-es2015-snippets'
 Plug 'joaohkfaria/vim-jest-snippets'
 Plug 'simonsmith/vim-custom-snippets'
-Plug 'SirVer/ultisnips'
 
 " Git
 " ------------------------------------------------------------------------------
@@ -191,16 +190,7 @@ Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
 
 call plug#end()
 
-" Shortcut for checking if a plugin is loaded
-function! s:has_plugin(plugin)
-  let lookup = 'g:plugs["' . a:plugin . '"]'
-  return exists(lookup)
-endfunction
-
-"  General config
-" ------------------------------------------------------------------------------
-
-lua << EOF
+lua <<EOF
 require'lualine'.setup {
   options = {
     icons_enabled = false,
@@ -237,7 +227,7 @@ require'lualine'.setup {
 }
 EOF
 
-lua << EOF
+lua <<EOF
 vim.g.tokyonight_italic_functions = false
 vim.g.tokyonight_italic_variables = false
 vim.g.tokyonight_italic_comments = false
@@ -245,14 +235,24 @@ vim.g.tokyonight_italic_keywords = false
 vim.g.tokyonight_colors = { bg_popup = "#485173", bg_float = "#485173"}
 EOF
 
+
+" Shortcut for checking if a plugin is loaded
+function! s:has_plugin(plugin)
+  let lookup = 'g:plugs["' . a:plugin . '"]'
+  return exists(lookup)
+endfunction
+
+"  General config
+" ------------------------------------------------------------------------------
+
 colorscheme tokyonight
 
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags='li\|p'
 
 " Set <space> to leader
-let mapleader=' '
-let maplocalleader='\'
+let mapleader=','
+let maplocalleader=','
 
 " Turn off swapfiles
 set noswapfile
@@ -502,187 +502,14 @@ if exists(':tnoremap')
   tnoremap <C-j> <C-\><C-n><C-w>j
   tnoremap <C-k> <C-\><C-n><C-w>k
   tnoremap <C-l> <C-\><C-n><C-w>l
-  tnoremap <expr> <Esc> (&filetype == "fzf") ? "<Esc>" : "<c-\><c-n>"
-endif
-
-"  Plugin config
-" ------------------------------------------------------------------------------
-if s:has_plugin('vim-textobj-entire')
-  let g:textobj_entire_no_default_key_mappings = 1
-  xmap aE <Plug>(textobj-entire-a)
-  omap aE <Plug>(textobj-entire-a)
-  xmap iE <Plug>(textobj-entire-i)
-  omap iE <Plug>(textobj-entire-i)
-endif
-
-if s:has_plugin('ultisnips')
-  let g:UltiSnipsExpandTrigger="<tab>"
-  let g:UltiSnipsJumpForwardTrigger="<tab>"
-  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-  let g:UltiSnipsSnippetDirectories=["UltiSnips"]
-endif
-
-if s:has_plugin('coc.nvim')
-  " Remap keys for gotos
-  nmap <silent> <leader>dr <Plug>(coc-references)
-  nmap <silent> <leader>dR <Plug>(coc-refactor)
-  nmap <silent> <leader>dd <Plug>(coc-implementation)
-  nmap <silent> <leader>dy <Plug>(coc-type-definition)
-  nmap <silent> <leader>dn <Plug>(coc-rename)
-  nmap <silent> <leader>dl <Plug>(coc-codelens-action)
-  nmap <silent> <leader>da <Plug>(coc-codeaction)
-  nmap <silent> <leader>dv :vsplit<cr> <Plug>(coc-implementation)
-
-  nmap <silent> <leader>p :Prettier<cr>
-
-  " restart coc because it breaks so often
-  nmap <silent> <leader>r :CocRestart<cr>
-
-  hi CocCodeLens guifg=#3a445e
-
-  command! -nargs=0 Prettier :CocCommand prettier.formatFile
-  nmap <silent> <leader>uf :CocList snippets<cr>
-
-  inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-        \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-  " documentation popup
-  nnoremap <silent> K :call <SID>show_documentation()<CR>
-  function! s:show_documentation()
-    if &filetype == 'vim'
-      execute 'h '.expand('<cword>')
-    else
-      call CocAction('doHover')
-    endif
-  endfunction
-endif
-
-if s:has_plugin('editorconfig-vim')
-  let g:EditorConfig_max_line_indicator = "none"
-  let g:EditorConfig_preserve_formatoptions = 1
-endif
-
-if s:has_plugin('bufexplorer')
-  let g:bufExplorerDisableDefaultKeyMapping = 1
-  let g:bufExplorerShowNoName = 1
-  nnoremap <leader>b :BufExplorer<cr>
-endif
-
-if s:has_plugin('vim-easyclip')
-  let g:EasyClipUseSubstituteDefaults = 0
-  let g:EasyClipUsePasteDefaults = 0
-  nmap s <plug>SubstituteOverMotionMap
-  xmap s <plug>XEasyClipPaste
-  imap <c-v> <plug>EasyClipInsertModePaste
-  " Place a mark (m taken by easyclip)
-  nnoremap gm m
-endif
-
-if s:has_plugin('sideways.vim')
-  nnoremap ]j :SidewaysRight<cr>
-  nnoremap [j :SidewaysLeft<cr>
-endif
-
-if s:has_plugin('undotree')
-  nnoremap <F5> :UndotreeToggle<cr>
-  let g:undotree_SplitWidth = 45
-endif
-
-if s:has_plugin('vim-bufonly')
-  nnoremap <leader>B :BufOnly<cr>
-endif
-
-if s:has_plugin('vim-javascript')
-  let g:javascript_plugin_flow=1
-  let g:javascript_plugin_jsdoc=1
-endif
-
-if s:has_plugin('vim-grepper')
-  nnoremap <leader>g :Grepper -tool ag<cr>
-  nnoremap <leader>G :Grepper -tool ag -buffers<cr>
-  nmap gs <plug>(GrepperOperator)
-  xmap gs <plug>(GrepperOperator)
-  let g:grepper = {}
-  let g:grepper.stop = 2500
-  let g:grepper.open = 50
-  let g:grepper.highlight = 1
-end
-
-if s:has_plugin('vim-better-whitespace')
-  autocmd BufEnter * EnableStripWhitespaceOnSave
-  highlight ExtraWhitespace ctermbg=red guibg = #e06c75
-endif
-
-if s:has_plugin('vim-session')
-  let g:session_autosave = 'yes'
-  let g:session_autoload = 'no'
-endif
-
-if s:has_plugin('vim-polyglot')
-  let g:vue_disable_pre_processors = 1
-  let g:jsx_ext_required = 0
-endif
-
-if s:has_plugin('splitjoin.vim')
-  let g:splitjoin_split_mapping = ''
-  let g:splitjoin_join_mapping = ''
-  nmap gj :SplitjoinSplit<cr>
-  nmap gk :SplitjoinJoin<cr>
-endif
-
-if s:has_plugin('vim-closetag')
-  let g:closetag_filenames = "*.html,*.js,*.jsx"
-  let g:closetag_close_shortcut = ''
-endif
-
-if s:has_plugin('vim-choosewin')
-  nmap  <leader>h <plug>(choosewin)
-  let g:choosewin_label_fill = 0
-  let g:choosewin_blink_on_land = 0
-endif
-
-if s:has_plugin('mileszs/ack.vim')
-  if executable('ag')
-    let g:ackprg = 'ag --vimgrep'
-    let g:ack_qhandler = "botright copen 40"
-  endif
-endif
-
-if s:has_plugin('vim-bbye')
-  nnoremap <silent>Q :silent Bdelete<cr>
-endif
-
-if s:has_plugin('taboo.vim')
-  let g:taboo_renamed_tab_format = '%l%m'
-  let g:taboo_close_tab_label = ''
-  nnoremap th :tabprev<cr>
-  nnoremap tl :tabnext<cr>
-  nnoremap tn :tabnew<cr>
-  nnoremap td :tabclose<cr>
-  nnoremap to :TabooOpen<space>
-  nnoremap tr :TabooRename<space>
-endif
-
-if s:has_plugin('nnn.vim')
-  nnoremap _ :NnnPicker %:p:h<cr>
-  let g:nnn#command = 'nnn -d -H'
-  let g:nnn#action = {
-        \ '<c-x>': 'split',
-        \ '<c-v>': 'vsplit' }
-endif
-
-if s:has_plugin('gv.vim')
-  nnoremap <c-g> :GV!<cr>
-endif
-
-if s:has_plugin('fzf.vim')
+  tnoremap <expr> <Esc> (&filetype == "fzf.vim')
   let g:fzf_height = '30%'
   let g:fzf_commits_log_options = '--color --graph --pretty=format:"%C(yellow)%h%Creset -%C(auto)%d%Creset %s %C(bold blue)(%cr) %Cred<%an>%Creset" --abbrev-commit'
 
-  nnoremap <c-p> :FZF<cr>
-  nnoremap <c-i> :Buffers<cr>
-  nnoremap <c-t> :Lines<cr>
-  nnoremap <c-space> :Rg!<cr>
+  nnoremap <leader>, :FZF<cr>
+  nnoremap <leader>b :Buffers<cr>
+  nnoremap <leader>f :Lines<cr>
+  nnoremap <leader>g :Rg!<cr>
   nnoremap <silent> <BS> :History:<cr>
 
   " Allow options to be passed to FZF :Ag
