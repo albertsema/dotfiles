@@ -62,6 +62,16 @@ Plug 'mhinz/vim-grepper'
 let g:polyglot_disabled = ['markdown']
 Plug 'sheerun/vim-polyglot'
 
+" Go
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+" Go imports on save
+let g:go_fmt_command = "goimports"
+
+" Ruby
+Plug 'tpope/vim-endwise'
+
+
 " Editing
 " ------------------------------------------------------------------------------
 

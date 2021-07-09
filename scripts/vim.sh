@@ -10,3 +10,9 @@ else
   # Open Neovim and install all plugins
   nvim -c PlugInstall -c quitall
 fi
+
+# LSP for Ruby
+gem install solargraph
+
+# LSP for Go
+GO111MODULE=on go get golang.org/x/tools/gopls@latest
