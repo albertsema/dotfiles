@@ -208,7 +208,7 @@ require'lualine'.setup {
     component_separators = {},
     section_separators = {},
     disabled_filetypes = {}
-  },
+    },
   sections = {
     lualine_a = {'mode'},
     lualine_b = {'branch'},
@@ -217,13 +217,13 @@ require'lualine'.setup {
     lualine_y = {},
     lualine_z = {
       {
-        'diagnostics',
-        sources = {'coc'},
-        sections = {'error', 'warn'},
-        symbols = {error = 'errors: ', warn = 'warnings: ', info = 'info: '}
+          'diagnostics',
+          sources = {'coc'},
+          sections = {'error', 'warn'},
+          symbols = {error = 'errors: ', warn = 'warnings: ', info = 'info: '}
       }
+      },
     },
-  },
   inactive_sections = {
     lualine_a = {},
     lualine_b = {'filename'},
@@ -231,10 +231,10 @@ require'lualine'.setup {
     lualine_x = {},
     lualine_y = {},
     lualine_z = {}
-  },
+    },
   tabline = {},
   extensions = {}
-}
+  }
 EOF
 
 lua <<EOF
@@ -541,19 +541,24 @@ if exists(':tnoremap')
   endif
 
   let g:fzf_colors =
-  \ { 'fg':      ['fg', 'Normal'],
-    \ 'bg':      ['bg', 'Normal'],
-    \ 'hl':      ['fg', 'Boolean'],
-    \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-    \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-    \ 'hl+':     ['fg', 'Statement'],
-    \ 'info':    ['fg', 'PreProc'],
-    \ 'border':  ['fg', 'Ignore'],
-    \ 'prompt':  ['fg', 'Conditional'],
-    \ 'pointer': ['fg', 'Exception'],
-    \ 'marker':  ['fg', 'Keyword'],
-    \ 'spinner': ['fg', 'Label'],
-    \ 'header':  ['fg', 'Comment'] }
+        \ { 'fg':      ['fg', 'Normal'],
+        \ 'bg':      ['bg', 'Normal'],
+        \ 'hl':      ['fg', 'Boolean'],
+        \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+        \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+        \ 'hl+':     ['fg', 'Statement'],
+        \ 'info':    ['fg', 'PreProc'],
+        \ 'border':  ['fg', 'Ignore'],
+        \ 'prompt':  ['fg', 'Conditional'],
+        \ 'pointer': ['fg', 'Exception'],
+        \ 'marker':  ['fg', 'Keyword'],
+        \ 'spinner': ['fg', 'Label'],
+        \ 'header':  ['fg', 'Comment'] }
+
+  let g:fzf_action = {
+        \ 'ctrl-x': 'silent exec "!echo"',
+        \ 'ctrl-h': 'split',
+        \ 'ctrl-v': 'vsplit' }
 endif
 
 if s:has_plugin('ListToggle')
@@ -587,8 +592,8 @@ endif
 
 " Output the current syntax group
 nnoremap <f10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>
+      \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+      \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>
 
 " Automatic commands
 " ------------------------------------------------------------------------------
