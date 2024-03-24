@@ -115,14 +115,17 @@
 [status]
   submoduleSummary = true
 
-[url "https://github.com/"]
-  insteadOf = git@github.com:
-
-[url "https://"]
-  insteadOf = git://
-
 [gpg]
   format = ssh
 
-[gpg "ssh"]
-  program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[user]
+	email = sema@hey.com
+	name = Albert Sema
+	signingKey = /Users/albertsema/.ssh/id_ed25519.pub
+  
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+
+[url "git://"]
+  insteadOf = https://
+
