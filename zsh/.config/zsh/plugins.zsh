@@ -22,7 +22,7 @@ OP_PLUGINS="$XDG_CONFIG_HOME/op"
 
 if [ -d "$OP_PLUGINS" ]; then
   # https://developer.1password.com/docs/cli
-  . $XDG_CONFIG_HOME/op/plugins.sh
+  #. $XDG_CONFIG_HOME/op/plugins.sh
 else
   echo "Directory does not exist: $OP_PLUGINS. Please reference https://developer.1password.com/docs/cli for installation instructions."
 fi

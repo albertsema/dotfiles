@@ -29,13 +29,13 @@ export DOTFILES="$HOME/dotfiles"
 export ABBR_USER_ABBREVIATIONS_FILE="$XDG_CONFIG_HOME/zsh-abbr/abbreviations.zsh"
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 export RANGER_LOAD_DEFAULT_RC=false
-export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
 
 . "$XDG_CONFIG_HOME/zsh/plugins.zsh" # Includes Zap - https://www.zapzsh.org
 . "$XDG_CONFIG_HOME/zsh/aliases.zsh"
 . "$XDG_CONFIG_HOME/zsh/functions.zsh"
 . "$XDG_CONFIG_HOME/zsh/colors.zsh"
-. "$HOME/.secrets/.zshrc.local"
+. "$HOME/.secrets"
+. "$HOME/.zshrc.local"
 
 export HISTSIZE=1000000000
 export SAVEHIST=1000000000
@@ -69,3 +69,9 @@ autoload -Uz compinit && compinit
 typeset -U path
 
 . "$HOME/.config/zsh/profiler.stop"
+
+export PATH="$HOME/.bin:$PATH"
+
+source "$HOME/.asdf/asdf.sh"
+
+export PATH="$HOME/.local/bin:$PATH"
