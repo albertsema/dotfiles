@@ -147,7 +147,7 @@ dotfiles_echo "Setting up symlinks with GNU Stow..."
 
 for item in *; do
   if [ -d "$item" ]; then
-    stow "$item"/
+    stow --adopt "$item"/
   fi
 done
 

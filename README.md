@@ -37,7 +37,7 @@ Make sure macOS is up to date and you have installed the [required software](#-p
 Clone this repo.
 
 ```sh
-git clone https://github.com/joshukraine/dotfiles.git ~/dotfiles
+git clone https://github.com/albertsema/dotfiles.git ~/dotfiles
 ```
 
 Read the setup script.
@@ -65,7 +65,7 @@ The dotfiles assume you are running macOS with (at minimum) the following softwa
 - [Neovim][neovim]
 - [Starship][starship]
 
-All of the above and more are installed with my fork of [Laptop][joshuas-laptop].
+All of the above and more are installed with this fork of [Laptop][joshuas-laptop].
 
 ## 🌟 New Mac Bootstrap
 
@@ -126,7 +126,7 @@ The setup script will try to detect and backup these files ahead of Stow, but it
 Clone
 
 ```sh
-git clone https://github.com/joshukraine/dotfiles.git ~/dotfiles
+git clone https://github.com/albertsema/dotfiles.git ~/dotfiles
 ```
 
 Read
