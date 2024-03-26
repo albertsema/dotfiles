@@ -1,5 +1,5 @@
 -- keymappings [view all the defaults by pressing <leader>Lk]
-lvim.leader = "space"
+lvim.leader = ","
 
 -- Remove key mappings that conflict with macOS
 lvim.keys.normal_mode["<C-Up>"] = false
@@ -20,6 +20,9 @@ lvim.keys.normal_mode["<Right>"] = ":vertical resize -2<cr>"
 
 -- INSERT mode ----------------------------------------------------------------
 lvim.keys.insert_mode["jj"] = "<ESC>"
+
+-- Neotree
+lvim.keys.normal_mode["<leader>e"] = ":Neotree toggle<cr>"
 
 -- VISUAL mode ----------------------------------------------------------------
 -- lvim.keys.visual_mode["p"] = "\"_dP"

@@ -7,6 +7,7 @@ plug "zap-zsh/supercharge"
 plug "zsh-users/zsh-syntax-highlighting"
 plug "zap-zsh/exa"
 plug "romkatv/powerlevel10k"
+plug "esc/conda-zsh-completion"
 
 # https://starship.rs
 # eval "$(starship init zsh)"

@@ -13,7 +13,8 @@ else
     eval "$(/usr/local/bin/brew shellenv)"
 fi
 
-export PATH="$HOME/.local/bin:$HOME/.bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.bin:~/.docker/bin:$PATH"
+export GOPRIVATE="gitscm.cisco.com"
 export EDITOR="nvim"
 export GIT_EDITOR="nvim"
 export BUNDLER_EDITOR=$EDITOR

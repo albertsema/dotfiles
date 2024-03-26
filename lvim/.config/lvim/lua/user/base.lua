@@ -5,10 +5,11 @@ lvim.builtin.nvimtree.setup.renderer.icons.glyphs.folder.arrow_open = ""
 lvim.builtin.terminal.active = true
 lvim.builtin.terminal.open_mapping = "<C-t>"
 lvim.builtin.treesitter.highlight.enable = true
-lvim.colorscheme = "tokyonight-storm"
+lvim.colorscheme = "tokyonight"
 lvim.format_on_save.enabled = true
 lvim.log.level = "warn"
 lvim.lsp.installer.setup.automatic_installation = true
+lvim.builtin.nvimtree.active = false -- NOTE: using neo-tree
 
 lvim.builtin.illuminate.options = {
   under_cursor = false,
