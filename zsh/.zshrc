@@ -13,10 +13,12 @@ else
     eval "$(/usr/local/bin/brew shellenv)"
 fi
 
-export PATH="$HOME/.local/bin:$HOME/.bin:~/.docker/bin:$PATH"
+export DOCKER="$HOME/.docker"
+
+export PATH="$HOME/.local/bin:$HOME/.bin:$DOCKER/bin:$PATH"
 export GOPRIVATE="gitscm.cisco.com"
-export EDITOR="nvim"
-export GIT_EDITOR="nvim"
+export EDITOR="lvim"
+export GIT_EDITOR="lvim"
 export BUNDLER_EDITOR=$EDITOR
 export MANPAGER="less -X" # Don’t clear the screen after quitting a manual page
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
