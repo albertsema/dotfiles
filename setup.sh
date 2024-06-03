@@ -67,11 +67,6 @@ if [ -z "$XDG_CONFIG_HOME" ]; then
   export XDG_CONFIG_HOME="${HOME}/.config"
 fi
 
-if [ ! -d "${HOME}/.local/bin" ]; then
-  dotfiles_echo "Setting up ~/.local/bin directory..."
-  mkdir -pv "${HOME}/.local/bin"
-fi
-
 dotfiles_echo "Checking your system architecture..."
 
 arch="$(uname -m)"
@@ -89,40 +84,12 @@ dotfiles_echo "Checking for potential stow conflicts..."
 cd "${DOTFILES}/" # stow needs to run from inside dotfiles dir
 
 stow_conflicts=(
-  ".asdfrc"
-  ".bashrc"
-  ".config/fish"
-  ".config/kitty"
   ".config/lazygit"
-  ".config/lvim"
-  ".config/nvim"
-  ".config/ranger"
   ".config/starship.toml"
-  ".config/tmux"
-  ".config/yamllint"
-  ".config/zsh"
-  ".config/zsh-abbr"
-  ".default-gems"
-  ".default-npm-packages"
-  ".gemrc"
   ".gitconfig"
   ".gitignore_global"
   ".gitmessage"
   ".hushlogin"
-  ".irbrc"
-  ".laptop.local"
-  ".local/bin/colortest"
-  ".local/bin/git-brst"
-  ".local/bin/git-cm"
-  ".local/bin/git-publish"
-  ".local/bin/git-uncommit"
-  ".local/bin/tat"
-  ".npmrc"
-  ".pryrc"
-  ".ripgreprc"
-  ".rubocop.yml"
-  ".tool-versions"
-  ".zshrc"
   "Brewfile"
 )
 

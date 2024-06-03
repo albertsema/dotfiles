@@ -1,0 +1,19 @@
+use-grammars = { only = [ "rust", "gopls" ] }
+
+[language-server.rust-analyzer.config]
+cargo = { buildScripts = { enable = true }, features = "all" }
+check = { features = "all" }
+procMacro = { enable = true }
+
+[language-server.rust-analyzer.config.inlayHints]
+lifetimeElisionHints = { enable = false, useParameterNames = false }
+renderColons = false
+typeHints = { hideNamedConstructor = true, hideClosureInitialization = true }
+parameterHints = { enable = false }
+chainingHints = { enable = false }
+
+
+
+[[language]]
+name = "rust"
+language-servers = ["rust-analyzer"]
