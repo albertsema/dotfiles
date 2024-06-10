@@ -119,8 +119,8 @@
 [gpg]
   format = ssh
 
-[url "git@github.com:"]
-	insteadOf = https://github.com/
-
 [url "git://"]
   insteadOf = https://
+[user]
+	name = Albert Sema (amatabar)
+	email = amatabar@cisco.com

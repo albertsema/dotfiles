@@ -15,10 +15,10 @@ fi
 
 export DOCKER="$HOME/.docker"
 
-export PATH="$HOME/.local/bin:$HOME/.bin:$DOCKER/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.bin:$DOCKER/bin:$HOME/.cargo/bin:$HOME/go/bin:$PATH"
 export GOPRIVATE="gitscm.cisco.com"
-export EDITOR="lvim"
-export GIT_EDITOR="lvim"
+export EDITOR="hx"
+export GIT_EDITOR="hx"
 export BUNDLER_EDITOR=$EDITOR
 export MANPAGER="less -X" # Don’t clear the screen after quitting a manual page
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"

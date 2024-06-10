@@ -17,7 +17,6 @@ select = "underline"
 [editor.lsp]
 display-signature-help-docs = true
 display-inlay-hints = true
-inline-diagnostics = { max-warp = 1 }
 
 [editor.statusline]
 right = ["version-control", "diagnostics", "selections", "position", "file-encoding"]

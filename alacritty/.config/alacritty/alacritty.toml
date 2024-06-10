@@ -1,11 +1,12 @@
 live_config_reload = true
 
-import: [~/.config/alacritty/tokyonight-night.toml]
+import = ["~/.config/alacritty/themes/catppuccin-mocha.toml"]
 
 [env]
 TERM = "xterm-256color"
 
 [window]
+startup_mode = "Fullscreen"
 decorations = "buttonless"
 dynamic_padding = false
 opacity = 0.9
@@ -15,23 +16,27 @@ x = 25
 y = 20
 
 [font]
-size = 20.0
+size = 18.0
 
 [font.bold]
 family = "BerkeleyMono Nerd Font Mono"
-style = "Heavy"
+style = "Bold"
 
 [font.bold_italic]
 family = "BerkeleyMono Nerd Font Mono"
-style = "Heavy Italic"
+style = "Bold Italic"
 
 [font.italic]
 family = "BerkeleyMono Nerd Font Mono"
-style = "Medium Italic"
+style = "Italic"
 
 [font.normal]
 family = "BerkeleyMono Nerd Font Mono"
-style = "Medium"
+style = "Regular"
 
 [cursor]
 style= "Beam"
+
+#[shell]
+#args = ["-l", "-c", "zellij attach --index 0 || zellij"]
+#program = "/opt/homebrew/bin/zsh"

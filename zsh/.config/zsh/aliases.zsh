@@ -7,25 +7,8 @@ alias cp='gcp -iv'
 # https://github.com/zap-zsh/exa (now uses eza)
 alias l='ll'
 
-# Middleman
-alias mm='bundle exec middleman'
-alias mms='bundle exec middleman server'
-alias mmc='bundle exec middleman console -e console'
-alias mmb='bundle exec middleman build --clean'
-alias mma='bundle exec middleman article'
-
-# Postgres
-alias psq='pgcli -d postgres'
-alias startpost='brew services start postgresql'
-alias statpost='ps aux | rg postgres'
-alias stoppost='brew services stop postgresql'
-
-# Mac App Store (https://github.com/argon/mas)
-alias masi='mas install'
-alias masl='mas list'
-alias maso='mas outdated'
-alias mass='mas search'
-alias masu='mas upgrade'
+# lazydocker
+alias lzd='lazydocker'
 
 # Finder
 # You can also toggle hidden files from the Finder GUI with Cmd + Shift + .
