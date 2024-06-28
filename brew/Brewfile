@@ -73,6 +73,7 @@ brew "nushell"
 brew "zellij"
 brew "helix"
 brew "alacritty"
+brew "goose"
 
 # homebrew-cask
 # https://github.com/Homebrew/homebrew-cask

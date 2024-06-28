@@ -119,8 +119,7 @@
 [gpg]
   format = ssh
 
-[url "git://"]
-  insteadOf = https://
 [user]
-	name = Albert Sema
-	email = sema@hey.com
+	name = Albert Sema (amatabar)
+	email = amatabar@cisco.com
+	signingKey = /Users/amatabar/.ssh/id_rsa.pub
