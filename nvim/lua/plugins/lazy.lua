@@ -91,7 +91,7 @@ require('lazy').setup({
           end
           vim.print = _G.dd -- Override print to use snacks for `:=` command
 
-          -- Create some toggle mappings
+        -- Create some toggle mappings
           Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
           Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
           Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
@@ -292,7 +292,7 @@ require('lazy').setup({
             else
               fallback()
             end
-          end, { 'i', 's' }),
+          end, { 's', 'i' }),
           ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()

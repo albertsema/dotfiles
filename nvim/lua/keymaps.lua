@@ -1,4 +1,7 @@
+-- Esc to jj
 vim.api.nvim_set_keymap("i", "jj", "<Esc>", {noremap=false})
+-- nvim-tree
+vim.api.nvim_set_keymap('n', '<leader>e', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 -- twilight
 vim.api.nvim_set_keymap("n", "tw", ":Twilight<enter>", {noremap=false})
 -- buffers
