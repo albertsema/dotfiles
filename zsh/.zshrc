@@ -5,8 +5,8 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 autoload bashcompinit && bashcompinit
 autoload -Uz compinit
 compinit
-source <(kubectl completion zsh)
-complete -C '/usr/local/bin/aws_completer' aws
+
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.local/bin:/opt/homebrew/bin:$HOME/.docker/bin
 
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^w' autosuggest-execute
@@ -16,7 +16,6 @@ bindkey '^L' vi-forward-word
 bindkey '^k' up-line-or-search
 bindkey '^j' down-line-or-search
 
-eval "$(starship init zsh)"
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
 # You may need to manually set your language environment
@@ -26,9 +25,13 @@ export EDITOR=/opt/homebrew/bin/nvim
 
 alias la=tree
 alias cat=bat
-alias v=lvim
-alias vi=lvim
-alias vim=lvim
+alias v=nvim
+alias vi=nvim
+alias vim=nvim
+
+# Golang private repo
+export GONOPROXY="github.com/cisco-it-product-lifecycle/*"
+export GOPRIVATE="github.com/cisco-it-product-lifecycle/*"
 
 # Git
 alias gc="git commit -m"
@@ -64,8 +67,6 @@ alias ......="cd ../../../../.."
 # Nmap
 alias nm="nmap -sC -sV -oN nmap"
 
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.local/bin
-
 alias cl='clear'
 
 # HTTP requests with xh!
@@ -83,16 +84,13 @@ alias ltree="eza --tree --level=2  --icons --git"
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export PATH=/opt/homebrew/bin:$PATH
-
 # navigation
 cx() { cd "$@" && l; }
 fcd() { cd "$(find . -type d -not -path '*/.*' | fzf)" && l; }
 f() { echo "$(find . -type f -not -path '*/.*' | fzf)" | pbcopy }
 fv() { nvim "$(find . -type f -not -path '*/.*' | fzf)" }
 
-export XDG_CONFIG_HOME="/Users/albertsema/.config"
+export XDG_CONFIG_HOME="/Users/amatabar/.config"
 
 eval "$(zoxide init zsh)"
-eval "$(atuin init zsh)"
-eval "$(direnv hook zsh)"
+eval "$(starship init zsh)"

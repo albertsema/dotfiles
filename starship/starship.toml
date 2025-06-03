@@ -17,10 +17,7 @@ success_symbol = '[➜](bold green)'
 format =  '[$symbol$branch(:$remote_branch)]($style)'
 
 [aws]
-format = '[$symbol(profile: "$profile" )(\(region: $region\) )]($style)'
-disabled = false
-style = 'bold blue'
-symbol = " "
+disabled = true
 
 [golang]
 format = '[ ](bold cyan)'
