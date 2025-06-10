@@ -1,5 +1,5 @@
-font-family = BerkelyMono Nerd Font Mono
-theme = catppuccin-mocha
+font-family = "TX-02"
+theme = dark:tokyonight-night,light:tokyonight-day
 font-size = 15
 theme = catppuccin-mocha
 shell-integration-features = no-cursor,sudo,no-title
