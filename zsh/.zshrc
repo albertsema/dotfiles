@@ -26,9 +26,9 @@ export EDITOR=/opt/homebrew/bin/nvim
 
 alias la=tree
 alias cat=bat
-alias v=lvim
-alias vi=lvim
-alias vim=lvim
+alias v=nvim
+alias vi=nvim
+alias vim=nvim
 
 # Git
 alias gc="git commit -m"
@@ -94,5 +94,3 @@ fv() { nvim "$(find . -type f -not -path '*/.*' | fzf)" }
 export XDG_CONFIG_HOME="/Users/albertsema/.config"
 
 eval "$(zoxide init zsh)"
-eval "$(atuin init zsh)"
-eval "$(direnv hook zsh)"
