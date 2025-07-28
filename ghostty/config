@@ -3,6 +3,9 @@
 font-family = "JetBrainsMono Nerd Font"
 font-size = 16
 
+# Window decoration
+window-decoration = none
+
 # Theme
 theme = catppuccin-frappe
 
