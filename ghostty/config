@@ -4,9 +4,6 @@ font-family = "JetBrainsMono Nerd Font"
 font-size = 16
 
 
-# Quick terminal position
-quick-terminal-position = "bottom"
-
 # Window decoration
 window-decoration = none
 
@@ -43,6 +40,13 @@ split-divider-color = #FF4F00
 # Keybindings
 
 # Toggle quick terminal
+keybind = global:super+grave_accent=toggle_quick_terminal
+quick-terminal-position = "center"
+
+# Reload configuration
+keybind = global:super+r=reload_config
+
+
 
 
 # open vertical split
