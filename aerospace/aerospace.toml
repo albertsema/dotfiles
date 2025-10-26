@@ -54,23 +54,7 @@ if.app-name-regex-substring = 'webex'
 run = 'layout floating'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'finder'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'slack'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'teams'
-run = 'layout floating'
-
-[[on-window-detected]]
 if.app-name-regex-substring = 'reflect'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'discord'
 run = 'layout floating'
 
 # Possible values: (qwerty|dvorak)
