@@ -19,6 +19,12 @@ bindkey '^j' down-line-or-search
 eval "$(starship init zsh)"
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
+
+# Source local
+if [ -f "$HOME/.zshrc.local" ]; then
+  source "$HOME/.zshrc.local"
+fi
+
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
@@ -59,7 +65,9 @@ alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 
 # GO
-export GOPATH='$HOME/go'
+export GOPATH="$HOME/go"
+export GOROOT="$(go env GOROOT)"
+export PATH="$GOPATH/bin:$PATH"
 
 # VIM
 alias v="nvim"
@@ -139,3 +147,5 @@ export XDG_CONFIG_HOME="$HOME/.config"
 eval "$(zoxide init zsh)"
 eval "$(atuin init zsh)"
 eval "$(direnv hook zsh)"
+
+. "$HOME/.local/bin/env"
