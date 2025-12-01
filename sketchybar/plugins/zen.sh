@@ -5,7 +5,6 @@ if [ $1 = "on" ]; then
              --set apple.logo drawing=off \
              --set '/cpu.*/' drawing=off \
              --set calendar icon.drawing=off \
-             --set system.yabai drawing=off \
              --set separator drawing=off \
              --set front_app drawing=off \
              --set spotify.play updates=off \
@@ -18,7 +17,5 @@ else
              --set calendar icon.drawing=on \
              --set separator drawing=on \
              --set front_app drawing=on \
-             --set system.yabai drawing=on \
              --set spotify.play updates=on
 fi
-
