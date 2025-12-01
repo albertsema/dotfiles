@@ -37,13 +37,57 @@ install_brew_dependencies() {
 stow_dotfiles() {
   echo "Stowing dotfiles into target defined in .stowrc..."
   cd "$SCRIPT_DIR"
-  stow .
+
+  local packages=()
+  local dir
+
+  for dir in */ ; do
+    dir="${dir%/}"
+    [[ "$dir" == ".git" || "$dir" == "nvim" ]] && continue
+    packages+=("$dir")
+  done
+
+  if ((${#packages[@]})); then
+    echo "Linking ${packages[*]} into ~/.config..."
+    stow "${packages[@]}"
+  fi
+
+  echo "Ensuring LazyVim config is linked into ~/.config/nvim..."
+  mkdir -p "$HOME/.config/nvim"
+
+  local lazyvim_example="$HOME/.config/nvim/lua/plugins/example.lua"
+  if [[ -f "$lazyvim_example" && ! -L "$lazyvim_example" ]]; then
+    echo "Removing default LazyVim example file at $lazyvim_example to avoid stow conflicts..."
+    rm -f "$lazyvim_example"
+  fi
+
+  stow --target="$HOME/.config/nvim" nvim
+}
+
+install_lazyvim() {
+  if ! command -v nvim >/dev/null 2>&1; then
+    echo "Neovim is not installed, skipping LazyVim installation."
+    return
+  fi
+
+  local lazyvim_dir="$HOME/.local/share/nvim/lazy/LazyVim"
+  if [[ -d "$lazyvim_dir" ]]; then
+    echo "LazyVim already installed at $lazyvim_dir."
+    return
+  fi
+
+  echo "LazyVim not detected. Installing plugins via headless Neovim..."
+  if ! nvim --headless "+Lazy! sync" +qa; then
+    echo "Failed to install LazyVim. Please refer to https://www.lazyvim.org/installation for manual steps."
+    exit 1
+  fi
 }
 
 main() {
   ensure_homebrew
   install_brew_dependencies
   stow_dotfiles
+  install_lazyvim
   echo "Setup complete."
 }
 

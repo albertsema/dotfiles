@@ -66,7 +66,12 @@ alias ......="cd ../../../../.."
 
 # GO
 export GOPATH="$HOME/go"
-export GOROOT="$(go env GOROOT)"
+if command -v go >/dev/null 2>&1; then
+  unset GOROOT # avoid stale values (e.g. from tmux) before querying go
+  export GOROOT="$(command go env GOROOT)"
+else
+  unset GOROOT
+fi
 export PATH="$GOPATH/bin:$PATH"
 
 # VIM
@@ -119,6 +124,9 @@ alias mat='osascript -e "tell application \"System Events\" to key code 126 usin
 export NIX_CONF_DIR=$HOME/.config/nix
 export PATH=/run/current-system/sw/bin:$PATH
 
+# Prefer locally installed CLI tools (e.g. tree-sitter 0.20 for nvim-treesitter)
+export PATH="$HOME/.local/bin:$PATH"
+
 function ranger {
 	local IFS=$'\t\n'
 	local tempfile="$(mktemp -t tmp.XXXXXX)"
@@ -148,4 +156,6 @@ eval "$(zoxide init zsh)"
 eval "$(atuin init zsh)"
 eval "$(direnv hook zsh)"
 
-. "$HOME/.local/bin/env"
+if [[ -f "$HOME/.local/bin/env" ]]; then
+	. "$HOME/.local/bin/env"
+fi
