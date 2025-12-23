@@ -1,9 +1,9 @@
 return {
-  "nvim-mini/mini.surround",
+  "echasnovski/mini.surround",
   opts = {
     mappings = {
-      add = "<leader>sa",
-      delete = "<leader>sd",
+      add = "sa",
+      delete = "sd",
       find = "gsf",
       find_left = "gsF",
       highlight = "gsh",

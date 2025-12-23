@@ -3,6 +3,7 @@ tap "FelixKratz/formulae"
 tap "koekeishiya/formulae"
 tap "nikitabobko/tap"
 tap "kdash-rs/kdash"
+tap "minorole/tap"
 
 # Window management and status bar
 brew "FelixKratz/formulae/sketchybar"
@@ -15,6 +16,7 @@ brew "direnv"
 brew "starship"
 brew "zoxide"
 brew "zsh-autosuggestions"
+brew "minorole/tap/gpane"
 
 # Terminal utilities referenced in the dotfiles
 brew "bat"
@@ -28,7 +30,6 @@ brew "ranger"
 brew "ripgrep"
 brew "silicon"
 brew "stow"
-brew "tmux"
 brew "tree"
 brew "tldr"
 brew "xh"
@@ -62,7 +63,7 @@ brew "kdash"
 brew "neovim"
 
 # Apps that need casks
-cask "docker"
+cask "docker-desktop"
 cask "ghostty"
 cask "karabiner-elements"
 cask "aerospace"

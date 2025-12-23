@@ -34,6 +34,26 @@ install_brew_dependencies() {
   brew bundle install --file="$brewfile"
 }
 
+ensure_legacy_tree_sitter_cli() {
+  # nvim-treesitter shells out to the legacy tree-sitter CLI, which was removed
+  # from the latest Homebrew formula. Keep a known-good copy in ~/.local/bin.
+  local version="0.20.8"
+  local prefix="$HOME/.local"
+  local bin="$prefix/bin/tree-sitter"
+
+  if [[ -x "$bin" ]]; then
+    if "$bin" --version 2>/dev/null | grep -Fq "$version"; then
+      echo "tree-sitter CLI $version already present at $bin."
+      return
+    fi
+    echo "Found tree-sitter CLI at $bin, but version mismatch. Reinstalling..."
+  fi
+
+  echo "Installing tree-sitter CLI $version into $prefix (required for nvim-treesitter)..."
+  mkdir -p "$prefix"
+  npm install --silent --no-package-lock --no-save --prefix "$prefix" "tree-sitter-cli@$version"
+}
+
 stow_dotfiles() {
   echo "Stowing dotfiles into target defined in .stowrc..."
   cd "$SCRIPT_DIR"
@@ -86,6 +106,7 @@ install_lazyvim() {
 main() {
   ensure_homebrew
   install_brew_dependencies
+  ensure_legacy_tree_sitter_cli
   stow_dotfiles
   install_lazyvim
   echo "Setup complete."
