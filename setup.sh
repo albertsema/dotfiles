@@ -1,0 +1,60 @@
+#!/bin/bash
+set -euo pipefail
+
+link() {
+  mkdir -p "$(dirname "$2")"
+  if [ -e "$2" ]; then
+    echo "Skipping $2, already exists."
+  else
+    ln -sf "$1" "$2"
+    echo "Linked $1 to $2"
+  fi
+}
+
+# bins
+link "$PWD"/bin ~/.bin
+
+if which tmux; then
+  link "$PWD"/tmux ~/.config/tmux
+
+  echo "Installing tmux plugin manager (TPM)..."
+  if [ ! -d ~/.config/tmux/plugins ]; then
+    mkdir -p ~/.config/tmux/plugins
+    git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm > /dev/null
+  fi
+
+  tmux source ~/.config/tmux/tmux.conf
+  "$HOME"/.config/tmux/plugins/tpm/bin/install_plugins
+fi
+
+#
+# shell
+link "$PWD"/zsh ~/.config/zsh
+
+# terms
+link "$PWD"/ghostty ~/.config/ghostty
+
+# neovim
+if which nvim; then
+  link "$PWD"/nvim ~/.config/nvim
+  nvim --headless "+Lazy! sync" +qa &>/dev/null
+fi
+
+# other apps
+link "$PWD"/git ~/.config/git
+link "$PWD"/gh/config.yml ~/.config/gh/config.yml
+link "$PWD"/gh-dash ~/.config/gh-dash
+link "$PWD"/aerospace ~/.config/aerospace
+link "$PWD"/sketchybar ~/.config/sketchybar
+link "$PWD"/atuin/config.toml ~/.config/atuin/config.toml
+link "$PWD"/btop ~/.config/btop
+link "$PWD"/lazygit ~/.config/lazygit
+link "$PWD"/starship/starship.toml ~/.config/starship.toml
+link "$PWD"/bat ~/.config/bat
+link "$PWD"/diffnav ~/.config/diffnav
+
+if [[ $OSTYPE == 'darwin'* ]]; then
+  brew bundle
+fi
+
+

@@ -1,254 +1,66 @@
-add_newline = true
-command_timeout = 150
-format = "$directory$kubernetes${env_var.DEVBOX_SHELL_ENABLED}$nix_shell${custom.fish_mode}$line_break$character"
+add_newline = false
+# A minimal left prompt
+format = """$directory$character"""
+palette = "catppuccin_mocha"
+# move the rest of the prompt to the right
+right_format = """$all"""
+command_timeout = 1000
 
 [character]
-success_symbol = "[󱝁 ](fg:#7dcfff)"
-error_symbol = "[󱝁 ](gray)"
-vicmd_symbol = "[ ](purple)"
-
-[git_state]
-disabled=false
-
-[git_branch]
-format = "on [$symbol$branch](bold purple) "
-disabled = true
-
-[git_status]
-disabled = true
-format = '([$all_status]($style))'
-conflicted = "([⚠️ ${count}](bold red) )"
-ahead = "([⟫${count}])"
-behind = "([⟪${count}])"
-stashed = "([↪ ${count}](bold red)) "
-modified = "([${count}](bold yellow) )"
-staged = "([ ${count}](bold green) )"
-renamed = "([⇆ ${count}](vold blue) )"
-deleted = "([ ${count}](bold red) )"
-untracked ="([ ${count}](dimmed red) )"
-
-[directory]
-truncate_to_repo = false
-truncation_length = 5
-read_only = " 󰌾"
-truncation_symbol = "…/"
+vicmd_symbol = "[N] >>>"
+success_symbol = '[➜](bold green)'
 
 [directory.substitutions]
-"~/code/port" = "@port"
-"~/code/playground" = "@playground"
-"~/code/personal" = "@personal"
-"~/code/scripts" = "@scripts"
+'~/tests/starship-custom' = 'work-project'
 
-[env_var.DEVBOX_SHELL_ENABLED]
-format = "[\\(devbox\\) ](bold fg:green)"
-
-[custom.fish_mode]
-command = 'echo "$fish_bind_mode"'
-when = true
-disabled = true
-format = '${output}'
-
-# [custom.devbox]
-# format = "[\\(devbox\\)]($style) "
-# style = "fg:green dimmed"
-# when = "env | grep DIRENV_FILE"
+[git_branch]
+format =  '[$symbol$branch(:$remote_branch)]($style)'
 
 [aws]
-disabled=true
-
-[azure]
-disabled=true
-
-[battery]
-disabled=true
-
-[buf]
-disabled=true
-
-[c]
-disabled=true
-
-[cmake]
-disabled=true
-
-[cmd_duration]
-disabled=true
-
-[cobol]
-disabled=true
-
-[conda]
-disabled=true
-
-[container]
-disabled=true
-
-[crystal]
-disabled=true
-
-[daml]
-disabled=true
-
-[dart]
-disabled=true
-
-[deno]
-disabled=true
-
-[docker_context]
-disabled=true
-
-[dotnet]
-disabled=true
-
-[elixir]
-disabled=true
-
-[elm]
-disabled=true
-
-[erlang]
-disabled=true
-
-[gcloud]
-disabled=true
-
-[git_commit]
-disabled=true
-
-[git_metrics]
-disabled=true
+format = '[$symbol(profile: "$profile" )(\(region: $region\) )]($style)'
+disabled = false
+style = 'bold blue'
+symbol = " "
 
 [golang]
-disabled=true
-
-[haskell]
-disabled=true
-
-[helm]
-disabled=true
-
-[hg_branch]
-disabled=true
-
-[java]
-disabled=true
-
-[julia]
-disabled=true
-
-[kotlin]
-disabled=true
+format = '[ ](bold cyan)'
 
 [kubernetes]
-format = 'in [$symbol](blue) [$context](blue bold) [(\($namespace\))](white)'
-symbol = "󱃾"
-disabled = false
+symbol = '☸ '
+disabled = true
+detect_files = ['Dockerfile']
+format = '[$symbol$context( \($namespace\))]($style) '
 contexts = [
-    { context_pattern = ".*kind.*", style = "green"},
-    { context_pattern = ".*lab.*", style = "green"},
-    { context_pattern = ".*production.*", style = "(red)", context_alias = "production 🚨"},
+  { context_pattern = "arn:aws:eks:us-west-2:577926974532:cluster/zd-pvc-omer", style = "green", context_alias = "omerxx", symbol = " " },
 ]
-detect_folders = ["umbrella"]
 
-[localip]
-disabled=true
+[docker_context]
+disabled = true
 
-[lua]
-disabled=true
-
-[memory_usage]
-disabled=true
-
-[nim]
-disabled=true
-
-[nix_shell]
-disabled=false
-symbol = " "
-format='via [$symbol $name]($style)'
-
-[nodejs]
-disabled=true
-
-[ocaml]
-disabled=true
-
-[openstack]
-disabled=true
-
-[package]
-disabled=true
-
-[perl]
-disabled=true
-
-[php]
-disabled=true
-
-[pulumi]
-disabled=true
-
-[purescript]
-disabled=true
-
-[python]
-disabled=true
-
-[raku]
-disabled=true
-
-[red]
-disabled=true
-
-[rlang]
-disabled=true
-
-[ruby]
-disabled=true
-
-[rust]
-disabled=true
-
-[scala]
-disabled=true
-
-[shell]
-disabled=true
-
-[shlvl]
-disabled=true
-
-[singularity]
-disabled=true
-
-[spack]
-disabled=true
-
-[status]
-disabled=true
-
-[swift]
-disabled=true
-
-[terraform]
-disabled=true
-
-[time]
-disabled=true
-
-[username]
-disabled=true
-
-[vagrant]
-disabled=true
-
-[vcsh]
-disabled=true
-
-[vlang]
-disabled=true
-
-[zig]
-disabled=true
-
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"

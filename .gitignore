@@ -2,9 +2,6 @@
 node_modules
 yarn.lock
 
-wallpapers
-setup/VivalArc-main
-
 # misc
 error.log
 debug.log

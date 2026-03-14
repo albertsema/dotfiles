@@ -1,4 +1,0 @@
-# commit_types:
-#  - type: description of what the short-form "type" means
-scopes:
-  - nvim: neovim
