@@ -2,7 +2,7 @@
 
 sketchybar --add event aerospace_workspace_change
 RED=0xffed8796
-for sid in $(aerospace list-workspaces --all); do
+for sid in 1 2 3 4 5 6 7 8; do
     sketchybar --add item "space.$sid" left \
         --subscribe "space.$sid" aerospace_workspace_change \
         --set "space.$sid" \
@@ -26,8 +26,8 @@ for sid in $(aerospace list-workspaces --all); do
 done
 
 sketchybar   --add item       separator left                          \
-             --set separator  icon=                                  \
-                              icon.font="Hack Nerd Font:Regular:16.0" \
+             --set separator  icon="↓"                               \
+                              icon.font="$FONT:Semibold:14.0"        \
                               background.padding_left=15              \
                               background.padding_right=15             \
                               label.drawing=off                       \

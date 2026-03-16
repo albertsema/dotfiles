@@ -27,6 +27,11 @@ export EDITOR=/opt/homebrew/bin/nvim
 alias la=tree
 alias cat=bat
 
+# Neovim
+alias v="nvim"
+alias vi="nvim"
+alias vim="nvim"
+
 # Git
 alias gc="git commit -m"
 alias gca="git commit -a -m"
@@ -108,7 +113,7 @@ fcd() { cd "$(find . -type d -not -path '*/.*' | fzf)" && l; }
 f() { echo "$(find . -type f -not -path '*/.*' | fzf)" | pbcopy }
 fv() { nvim "$(find . -type f -not -path '*/.*' | fzf)" }
 
-export XDG_CONFIG_HOME="~/.config"
+export XDG_CONFIG_HOME="$HOME/.config"
 
 eval "$(zoxide init zsh)"
 eval "$(atuin init zsh)"

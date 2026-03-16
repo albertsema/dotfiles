@@ -41,20 +41,15 @@ if which nvim; then
 fi
 
 # other apps
-link "$PWD"/git ~/.config/git
 link "$PWD"/gh/config.yml ~/.config/gh/config.yml
 link "$PWD"/gh-dash ~/.config/gh-dash
 link "$PWD"/aerospace ~/.config/aerospace
 link "$PWD"/sketchybar ~/.config/sketchybar
 link "$PWD"/atuin/config.toml ~/.config/atuin/config.toml
-link "$PWD"/btop ~/.config/btop
 link "$PWD"/lazygit ~/.config/lazygit
 link "$PWD"/starship/starship.toml ~/.config/starship.toml
-link "$PWD"/bat ~/.config/bat
 link "$PWD"/diffnav ~/.config/diffnav
 
 if [[ $OSTYPE == 'darwin'* ]]; then
   brew bundle
 fi
-
-
