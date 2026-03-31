@@ -63,9 +63,6 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 
-# GO
-export GOPATH='~/code/go'
-
 
 # Nmap
 alias nm="nmap -sC -sV -oN nmap"
