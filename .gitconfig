@@ -1,0 +1,10 @@
+[push]
+	autoSetupRemote = true
+[rerere]
+	enabled = true
+[pull]
+	rebase = true
+[pager]
+	diff = diffnav
+[include]
+	path = ~/.gitconfig.local

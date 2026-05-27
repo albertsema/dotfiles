@@ -32,5 +32,15 @@ return {
         end,
       })
     end,
+    opts = {
+      filesystem = {
+        filtered_items = {
+          always_show = {
+            ".zshrc",
+            ".gitconfig",
+          },
+        },
+      },
+    },
   },
 }

@@ -15,11 +15,19 @@ return {
         filename = {
           Dockerfile = "dockerfile",
           Containerfile = "dockerfile",
+          ["compose.yaml"] = "yaml.docker-compose",
+          ["compose.yml"] = "yaml.docker-compose",
+          ["docker-compose.yaml"] = "yaml.docker-compose",
+          ["docker-compose.yml"] = "yaml.docker-compose",
         },
         pattern = {
           ["Dockerfile%..*"] = "dockerfile",
           [".*%.Dockerfile"] = "dockerfile",
           ["Containerfile%..*"] = "dockerfile",
+          [".*compose%.[^/]+%.yaml$"] = { "yaml.docker-compose", { priority = 10 } },
+          [".*compose%.[^/]+%.yml$"] = { "yaml.docker-compose", { priority = 10 } },
+          [".*docker%-compose%.[^/]+%.yaml$"] = { "yaml.docker-compose", { priority = 10 } },
+          [".*docker%-compose%.[^/]+%.yml$"] = { "yaml.docker-compose", { priority = 10 } },
         },
       })
 
@@ -58,6 +66,7 @@ return {
     opts = function(_, opts)
       opts.formatters_by_ft = opts.formatters_by_ft or {}
       opts.formatters_by_ft.dockerfile = { lsp_format = "prefer" }
+      opts.formatters_by_ft["yaml.docker-compose"] = { lsp_format = "prefer" }
     end,
   },
 }

@@ -31,6 +31,9 @@ fi
 # shell
 link "$PWD"/zsh ~/.config/zsh
 
+# git
+link "$PWD"/.gitconfig ~/.gitconfig
+
 # terms
 link "$PWD"/ghostty ~/.config/ghostty
 

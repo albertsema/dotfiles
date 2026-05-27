@@ -2,10 +2,14 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
-      if not opts.servers then
-        opts.servers = {}
+      opts.servers = opts.servers or {}
+
+      local function server_opts(server)
+        local current = opts.servers[server]
+        return current == true and {} or current or {}
       end
-      opts.servers.gopls = {
+
+      opts.servers.gopls = vim.tbl_deep_extend("force", server_opts("gopls"), {
         settings = {
           gopls = {
             analyses = {
@@ -17,8 +21,7 @@ return {
             gofumpt = true,
           },
         },
-      }
-      return opts
+      })
     end,
   },
 }

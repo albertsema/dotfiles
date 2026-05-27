@@ -102,7 +102,7 @@ alias ltree="eza --tree --level=2  --icons --git"
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export PATH=/opt/homebrew/bin:$HOME/.local/bin:$PATH
+export PATH=/opt/homebrew/opt/ruby/bin:/opt/homebrew/bin:$HOME/.local/bin:$PATH
 
 # navigation
 cx() { cd "$@" && l; }

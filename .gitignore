@@ -6,6 +6,7 @@ yarn.lock
 error.log
 debug.log
 .DS_Store
+.gitconfig.local
 
 tmux/plugins
 tmux/plugins
