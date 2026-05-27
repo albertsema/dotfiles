@@ -20,7 +20,7 @@ if which tmux; then
   echo "Installing tmux plugin manager (TPM)..."
   if [ ! -d ~/.config/tmux/plugins ]; then
     mkdir -p ~/.config/tmux/plugins
-    git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm > /dev/null
+    git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm >/dev/null
   fi
 
   tmux source ~/.config/tmux/tmux.conf
