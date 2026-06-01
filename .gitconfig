@@ -6,5 +6,7 @@
 	rebase = true
 [pager]
 	diff = diffnav
+[gpg]
+	format = ssh
 [include]
 	path = ~/.gitconfig.local
