@@ -53,7 +53,7 @@ link "$PWD"/lazygit ~/.config/lazygit
 link "$PWD"/starship/starship.toml ~/.config/starship.toml
 link "$PWD"/diffnav ~/.config/diffnav
 link "$PWD"/sesh ~/.config/sesh
-link "$PWD".gitconfig ~/.gitconfig
+link "$PWD"/herdr ~/.config/herdr
 
 if [[ $OSTYPE == 'darwin'* ]]; then
   brew bundle
