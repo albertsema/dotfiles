@@ -85,9 +85,19 @@ keybindings:
   prs:
     - key: C
       name: code review
-      command: >
-        tmux new-window -n "PR-{{.PrNumber}}" 
-        'wt switch pr:{{.PrNumber}} -x "opencode --prompt `@code-reviewer: review-pr-for-this-branch`"'
+      command: |
+        HERDR="${HERDR_BIN_PATH:-herdr}"
+        if [ -n "${HERDR_ACTIVE_WORKSPACE_ID:-}" ]; then
+          response="$("$HERDR" tab create --workspace "$HERDR_ACTIVE_WORKSPACE_ID" --cwd "{{.RepoPath}}" --label "PR-{{.PrNumber}}" --focus)"
+        else
+          response="$("$HERDR" tab create --cwd "{{.RepoPath}}" --label "PR-{{.PrNumber}}" --focus)"
+        fi
+        pane_id="$(printf '%s' "$response" | jq -r '.result.root_pane.pane_id // .result.pane.pane_id // .result.pane_id // empty')"
+        if [ -z "$pane_id" ]; then
+          printf '%s\n' "$response" >&2
+          exit 1
+        fi
+        "$HERDR" pane run "$pane_id" 'wt switch pr:{{.PrNumber}} -x "opencode --prompt `@code-reviewer: review-pr-for-this-branch`"'
 
 theme:
   colors:

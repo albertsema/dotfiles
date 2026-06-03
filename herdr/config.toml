@@ -1,33 +1,50 @@
 onboarding = false
 
 [theme]
-name = "tokyo-night"
+name = "catppuccin"
+
+[theme.custom]
+# Match the Catppuccin tab bar colors.
+# Herdr tabs use panel_bg for the row, surface0/overlay1 for inactive tabs,
+# and accent/panel_bg for the active tab.
+panel_bg = "#1e1e2e"
+surface0 = "#313244"
+surface1 = "#45475a"
+surface_dim = "#1e1e2e"
+overlay0 = "#45475a"
+overlay1 = "#cdd6f4"
+text = "#cdd6f4"
+subtext0 = "#a6adc8"
+accent = "#fab387"
+blue = "#89b4fa"
+peach = "#fab387"
 
 [terminal]
-# Match tmux's habit of opening splits/tabs from the focused pane directory.
+# Open splits and tabs from the focused pane directory.
 new_cwd = "follow"
 
 [keys]
 prefix = "ctrl+a"
 
-# tmux window bindings map to Herdr tabs.
+# Tab management.
 new_tab = "prefix+c"
 previous_tab = "prefix+H"
 next_tab = "prefix+L"
 rename_tab = "prefix+r"
+close_tab = "prefix+ampersand"
 switch_tab = "prefix+1..9"
 
-# tmux list/choose commands map to Herdr's navigation surfaces.
+# Navigation surfaces.
 workspace_picker = ["prefix+w", "prefix+ctrl+w", "prefix+double_quote"]
 goto = "prefix+S"
 
 detach = "prefix+ctrl+d"
 reload_config = "prefix+R"
 
-# Keep prefix+s for split-down, matching tmux; disable Herdr's default settings key.
+# Keep prefix+s for split-down; leave prefix+- for resize mode.
 settings = ""
-split_horizontal = ["prefix+s", "prefix+|"]
-split_vertical = "prefix+v"
+split_horizontal = "prefix+s"
+split_vertical = ["prefix+v", "prefix+|"]
 
 focus_pane_left = "prefix+h"
 focus_pane_down = "prefix+j"
@@ -39,8 +56,7 @@ zoom = "prefix+z"
 # Herdr exposes directional pane resizing through resize mode.
 resize_mode = ["prefix+comma", "prefix+period", "prefix+minus", "prefix+="]
 
-# Avoid collisions with tmux's prefix+X and prefix+P muscle memory.
-close_tab = ""
+# Pane renaming is intentionally unbound.
 rename_pane = ""
 
 [[keys.command]]

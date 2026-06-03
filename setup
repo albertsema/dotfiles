@@ -14,19 +14,6 @@ link() {
 # bins
 link "$PWD"/bin ~/.bin
 
-if which tmux; then
-  link "$PWD"/tmux ~/.config/tmux
-
-  echo "Installing tmux plugin manager (TPM)..."
-  if [ ! -d ~/.config/tmux/plugins ]; then
-    mkdir -p ~/.config/tmux/plugins
-    git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm >/dev/null
-  fi
-
-  tmux source ~/.config/tmux/tmux.conf
-  "$HOME"/.config/tmux/plugins/tpm/bin/install_plugins
-fi
-
 #
 # shell
 link "$PWD"/zsh ~/.config/zsh
@@ -52,9 +39,8 @@ link "$PWD"/atuin/config.toml ~/.config/atuin/config.toml
 link "$PWD"/lazygit ~/.config/lazygit
 link "$PWD"/starship/starship.toml ~/.config/starship.toml
 link "$PWD"/diffnav ~/.config/diffnav
-link "$PWD"/sesh ~/.config/sesh
 link "$PWD"/herdr ~/.config/herdr
 
-if [[ $OSTYPE == 'darwin'* ]]; then
-  brew bundle
-fi
+# if [[ $OSTYPE == 'darwin'* ]]; then
+#   brew bundle
+# fi
