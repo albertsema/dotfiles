@@ -180,6 +180,7 @@ enter_accept = true
 #   "podman",
 #   "port",
 #   "systemctl",
+#   "tmux",
 #   "yarn",
 # ]
 

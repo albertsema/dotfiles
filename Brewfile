@@ -2,6 +2,8 @@ tap "common-fate/granted"
 tap "felixkratz/formulae"
 tap "go-task/tap"
 tap "homebrew/bundle"
+tap "joshmedeski/sesh"
+tap "morantron/tmux-fingers"
 tap "nikitabobko/tap"
 tap "silesky/tap"
 
@@ -10,6 +12,12 @@ brew "atuin"
 brew "direnv"
 brew "fish"
 brew "starship"
+
+# ── Terminal multiplexer ──
+brew "tmux"
+brew "gitmux"
+brew "joshmedeski/sesh/sesh"
+brew "morantron/tmux-fingers/tmux-fingers"
 
 # ── Languages & runtimes ──
 brew "deno"
