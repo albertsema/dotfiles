@@ -217,18 +217,20 @@ backspace = ['close-all-windows-but-current', 'mode main']
 # ---------------------------------------------------------------------------
 # Pin workspaces to physical monitors.
 #   Built-in              -> MBP Liquid Retina XDR display
-#   Apple Studio Display  -> external
-#   Dell 32"              -> external (matches DELL U/DELL S patterns)
+#   Apple Studio Display  -> external (matched explicitly)
+#   Any other external    -> matched by the catch-all '^(?!.*Built-in).*$'
+#                            regex (any monitor whose name isn't "Built-in"),
+#                            so any 32" monitor works regardless of brand.
 # Workspaces that are not assigned (8, 9 here) fall through to the
 # remaining monitor, so a single-display setup still gets every workspace.
 # ---------------------------------------------------------------------------
 [workspace-to-monitor-force-assignment]
-1 = ['Studio Display', '^DELL.*$', 'Built-in Retina Display']
-2 = ['Studio Display', '^DELL.*$', 'Built-in Retina Display']
-3 = ['Studio Display', '^DELL.*$', 'Built-in Retina Display']
-4 = ['Studio Display', '^DELL.*$', 'Built-in Retina Display']
-5 = ['Studio Display', '^DELL.*$', 'Built-in Retina Display']
-6 = ['Studio Display', '^DELL.*$', 'Built-in Retina Display']
-7 = ['Studio Display', '^DELL.*$', 'Built-in Retina Display']
-8 = ['Studio Display', '^DELL.*$', 'Built-in Retina Display']
-9 = ['Built-in Retina Display', 'Studio Display', '^DELL.*$']
+1 = ['Studio Display', '^(?!.*Built-in).*$', 'Built-in Retina Display']
+2 = ['Studio Display', '^(?!.*Built-in).*$', 'Built-in Retina Display']
+3 = ['Studio Display', '^(?!.*Built-in).*$', 'Built-in Retina Display']
+4 = ['Studio Display', '^(?!.*Built-in).*$', 'Built-in Retina Display']
+5 = ['Studio Display', '^(?!.*Built-in).*$', 'Built-in Retina Display']
+6 = ['Studio Display', '^(?!.*Built-in).*$', 'Built-in Retina Display']
+7 = ['Studio Display', '^(?!.*Built-in).*$', 'Built-in Retina Display']
+8 = ['Studio Display', '^(?!.*Built-in).*$', 'Built-in Retina Display']
+9 = ['Built-in Retina Display', 'Studio Display', '^(?!.*Built-in).*$']
