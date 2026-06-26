@@ -5,6 +5,8 @@ return {
       filesystem = {
         filtered_items = {
           always_show = {
+            ".claude",
+            ".codex",
             ".zshrc",
             ".gitconfig",
           },

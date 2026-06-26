@@ -11,6 +11,200 @@ link() {
   fi
 }
 
+brew_name_token() {
+  echo "${1##*/}"
+}
+
+brew_tap_installed() {
+  brew tap | grep -Fx "$1" >/dev/null
+}
+
+brew_formula_installed() {
+  local formula token
+  formula="$1"
+  token="$(brew_name_token "$formula")"
+
+  brew list --formula | grep -Fx "$token" >/dev/null
+}
+
+brew_cask_installed() {
+  local cask token
+  cask="$1"
+  token="$(brew_name_token "$cask")"
+
+  brew list --cask | grep -Fx "$token" >/dev/null
+}
+
+brew_formula_outdated() {
+  local formula item outdated token
+  formula="$1"
+  token="$(brew_name_token "$formula")"
+  outdated="$(brew outdated --formula --quiet "$formula" 2>/dev/null || true)"
+
+  while IFS= read -r item; do
+    if [ "$(brew_name_token "$item")" = "$token" ]; then
+      return 0
+    fi
+  done <<<"$outdated"
+
+  return 1
+}
+
+brew_cask_outdated() {
+  local cask item outdated token
+  cask="$1"
+  token="$(brew_name_token "$cask")"
+  outdated="$(brew outdated --cask --quiet --greedy-auto-updates "$cask" 2>/dev/null || true)"
+
+  while IFS= read -r item; do
+    if [ "$(brew_name_token "$item")" = "$token" ]; then
+      return 0
+    fi
+  done <<<"$outdated"
+
+  return 1
+}
+
+run_ruby() {
+  if command -v ruby >/dev/null 2>&1; then
+    ruby "$@"
+  else
+    brew ruby "$@"
+  fi
+}
+
+brew_cask_app_exists() {
+  local app app_paths cask
+  cask="$1"
+
+  # shellcheck disable=SC2016
+  app_paths="$(
+    brew info --cask --json=v2 "$cask" 2>/dev/null |
+      run_ruby -rjson -e '
+        cask = JSON.parse($stdin.read).fetch("casks", []).first
+        exit 1 unless cask
+
+        cask.fetch("artifacts", []).each do |artifact|
+          next unless artifact.is_a?(Hash)
+
+          app = artifact["app"]
+          next unless app.is_a?(Array) && app.first.is_a?(String)
+
+          target = artifact["target"]
+          if target.is_a?(String) && target.end_with?(".app")
+            puts File.expand_path(target)
+          elsif app.first.end_with?(".app")
+            puts File.join("/Applications", File.basename(app.first))
+          end
+        end
+      ' 2>/dev/null
+  )" || return 1
+
+  [ -n "$app_paths" ] || return 1
+
+  while IFS= read -r app; do
+    if [ -e "$app" ]; then
+      return 0
+    fi
+  done <<<"$app_paths"
+
+  return 1
+}
+
+install_brewfile() {
+  local brewfile kind line name
+  brewfile="${1:-Brewfile}"
+
+  if ! command -v brew >/dev/null 2>&1; then
+    echo "Skipping $brewfile, Homebrew is not installed."
+    return
+  fi
+
+  if [ "$UPDATE_BREW" -eq 1 ]; then
+    brew update
+  fi
+
+  while IFS= read -r line || [ -n "$line" ]; do
+    if [[ $line =~ ^[[:space:]]*tap[[:space:]]+\"([^\"]+)\" ]]; then
+      kind="tap"
+      name="${BASH_REMATCH[1]}"
+    elif [[ $line =~ ^[[:space:]]*brew[[:space:]]+\"([^\"]+)\" ]]; then
+      kind="brew"
+      name="${BASH_REMATCH[1]}"
+    elif [[ $line =~ ^[[:space:]]*cask[[:space:]]+\"([^\"]+)\" ]]; then
+      kind="cask"
+      name="${BASH_REMATCH[1]}"
+    else
+      continue
+    fi
+
+    case "$kind" in
+      tap)
+        if brew_tap_installed "$name"; then
+          echo "Skipping tap $name, already tapped."
+        else
+          brew tap "$name"
+        fi
+        ;;
+      brew)
+        if brew_formula_installed "$name"; then
+          if [ "$UPGRADE_BREW" -eq 1 ] && brew_formula_outdated "$name"; then
+            brew upgrade "$name"
+          else
+            echo "Skipping formula $name, already installed."
+          fi
+        else
+          brew install "$name"
+        fi
+        ;;
+      cask)
+        if brew_cask_installed "$name"; then
+          if [ "$UPGRADE_BREW" -eq 1 ] && brew_cask_outdated "$name"; then
+            brew upgrade --cask --greedy-auto-updates "$name"
+          else
+            echo "Skipping cask $name, already installed."
+          fi
+        elif brew_cask_app_exists "$name"; then
+          echo "Skipping cask $name, app already exists but is not managed by Homebrew."
+        else
+          brew install --cask "$name"
+        fi
+        ;;
+    esac
+  done <"$brewfile"
+}
+
+usage() {
+  printf 'Usage: %s [--update] [--upgrade]\n' "$0"
+  printf '\n'
+  printf '  --update   Run brew update before installing missing Brewfile entries.\n'
+  printf '  --upgrade  Run brew update and upgrade outdated Brewfile formulas/casks managed by Homebrew.\n'
+}
+
+UPDATE_BREW=0
+UPGRADE_BREW=0
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --update)
+      UPDATE_BREW=1
+      ;;
+    --upgrade)
+      UPDATE_BREW=1
+      UPGRADE_BREW=1
+      ;;
+    -h | --help)
+      usage
+      exit 0
+      ;;
+    *)
+      usage >&2
+      exit 2
+      ;;
+  esac
+  shift
+done
+
 # bins
 link "$PWD"/bin ~/.bin
 
@@ -37,6 +231,9 @@ link "$PWD"/.gitconfig ~/.gitconfig
 # terms
 link "$PWD"/ghostty ~/.config/ghostty
 
+# agents
+link "$PWD"/agents ~/.config/agents
+
 # neovim
 if which nvim; then
   link "$PWD"/nvim ~/.config/nvim
@@ -56,5 +253,5 @@ link "$PWD"/sesh ~/.config/sesh
 link "$PWD"/herdr ~/.config/herdr
 
 if [[ $OSTYPE == 'darwin'* ]]; then
-  brew bundle
+  install_brewfile "$PWD"/Brewfile
 fi

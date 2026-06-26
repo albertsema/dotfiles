@@ -5,6 +5,22 @@
 ./setup
 ```
 
+To refresh Homebrew metadata before installing missing Brewfile entries:
+
+```bash
+./setup --update
+```
+
+To refresh Homebrew metadata and upgrade outdated Brewfile formulas/casks that
+Homebrew already manages:
+
+```bash
+./setup --upgrade
+```
+
+Apps that already exist outside Homebrew are skipped rather than adopted or
+overwritten.
+
 ### Local Git config:
 
 `setup` links the tracked `.gitconfig` to `~/.gitconfig`. Private or machine-specific

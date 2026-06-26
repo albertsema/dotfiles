@@ -33,7 +33,7 @@ alias vi="nvim"
 alias vim="nvim"
 
 # Git
-alias gc="git commit -m"
+alias gc="git commit"
 alias gca="git commit -a -m"
 alias gp="git push origin HEAD"
 alias gpu="git pull origin"
