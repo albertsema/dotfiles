@@ -45,7 +45,7 @@ move_app() {
     window_ids=$(aerospace list-windows --all --format '%{window-id} %{app-name}' \
                  | awk -v pat="$app_pattern" 'tolower($0) ~ tolower(pat) { print $1 }')
     for id in $window_ids; do
-        aerospace move-node-to-workspace --window-id "$id" "$ws" || true
+        aerospace move-node-to-workspace --window-id "$id" "$ws" >/dev/null 2>&1 || true
     done
 }
 
