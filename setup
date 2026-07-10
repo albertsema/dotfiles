@@ -3,10 +3,13 @@ set -euo pipefail
 
 link() {
   mkdir -p "$(dirname "$2")"
-  if [ -e "$2" ]; then
-    echo "Skipping $2, already exists."
+  if [ -L "$2" ]; then
+    ln -sfn "$1" "$2"
+    echo "Relinked $2 -> $1"
+  elif [ -e "$2" ]; then
+    echo "Skipping $2, already exists (not a symlink)."
   else
-    ln -sf "$1" "$2"
+    ln -sfn "$1" "$2"
     echo "Linked $1 to $2"
   fi
 }
@@ -233,6 +236,11 @@ link "$PWD"/ghostty ~/.config/ghostty
 
 # agents
 link "$PWD"/agents ~/.config/agents
+link "$PWD"/agents/AGENTS.md ~/AGENTS.md
+link "$PWD"/agents/AGENTS.md ~/.claude/CLAUDE.md
+link "$PWD"/agents/AGENTS.md ~/.codex/AGENTS.md
+link "$PWD"/agents/AGENTS.md ~/.config/opencode/AGENTS.md
+link "$PWD"/agents/AGENTS.md ~/.pi/agent/AGENTS.md
 
 # neovim
 if which nvim; then
