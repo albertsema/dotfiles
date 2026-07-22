@@ -63,8 +63,7 @@ brew "goreleaser"
 
 # ── Git ──
 brew "gh"
-brew "git-delta"
-brew "diffnav"
+brew "hunk"
 brew "lazygit"
 # gh-dash is managed as a GitHub CLI extension: gh extension install dlvhdr/gh-dash
 

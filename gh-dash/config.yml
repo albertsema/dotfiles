@@ -120,7 +120,7 @@ theme:
       showSeparator: true
       compact: true
 pager:
-  diff: "diffnav"
+  diff: "hunk pager"
 confirmQuit: false
 showAuthorIcons: true
 smartFilteringAtLaunch: true

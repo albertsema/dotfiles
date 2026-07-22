@@ -1,0 +1,14 @@
+# Hunk - terminal diff viewer (https://github.com/modem-dev/hunk)
+# Keybindings are hardcoded (not configurable). Reference:
+#   j/k, arrows      navigate
+#   Ctrl+D / Ctrl+U  half-page scroll
+#   Space / S-Space  page forward / back
+#   s                toggle sidebar file tree
+#   e                open selected file in $EDITOR
+#   t                theme picker
+#   q                quit
+
+theme = "rose-pine"
+mode = "auto" # split when wide, stack when narrow
+line_numbers = true
+wrap_lines = false
