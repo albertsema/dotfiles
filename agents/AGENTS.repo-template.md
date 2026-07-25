@@ -1,6 +1,14 @@
-# Albert's agent instructions
+<!--
+Portable agent instructions template.
+Copy this file into a repo root as AGENTS.md (read natively by Codex and Cursor).
+Then add a CLAUDE.md next to it containing a single line: @AGENTS.md
+Keep machine-specific tooling (local MCP servers, personal files) out of this file;
+that belongs in the local global config, not in repos.
+-->
 
-These are common instructions for Albert's agents across all scenarios.
+# Agent instructions
+
+These instructions apply to all AI coding agents working in this repository.
 
 ## General Guidelines
 
@@ -17,10 +25,5 @@ These are common instructions for Albert's agents across all scenarios.
   If something clearly looks off, even if it is not directly related to what you are doing, try to get it fixed along the way.
 - Apply that same high standard to engineering excellence: lint, test failures, and test flakiness.
   If you see one, even if it is not caused by what you are working on right now, still get it fixed.
-- Use `gh-axi` for GitHub and `chrome-devtools-axi` for browser automation.
 - When creating git branches, follow the Conventional Branch convention (https://conventionalbranch.org): `<type>/<short-description>`, e.g. `feat/mouse-support` or `fix/login-redirect`.
   Keep the description short (2-4 words, kebab-case), and never prefix branch names with a user or agent name.
-
-## Voice Profile
-
-When you are talking/posting on behalf of Albert using his identity, read ~/VOICE.md to see how Albert talks.
