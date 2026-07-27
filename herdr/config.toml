@@ -1,0 +1,65 @@
+# herdr configuration (~/.config/herdr/config.toml)
+# Keybindings port the old tmux setup: ctrl+a prefix, vim-style pane
+# navigation, and the s/v split and H/L window-cycling muscle memory.
+
+[theme]
+# Same palette the tmux status line used.
+name = "rose-pine"
+
+[keys]
+# tmux: set -g prefix ^A
+prefix = "ctrl+a"
+
+# Tabs (tmux windows)
+new_tab = ["prefix+c", "prefix+ctrl+c"]        # tmux: c / ^C new-window
+rename_tab = ["prefix+r", "prefix+shift+t"]    # tmux: r rename-window
+previous_tab = ["prefix+shift+h", "prefix+p"]  # tmux: H previous-window
+next_tab = ["prefix+shift+l", "prefix+n"]      # tmux: L next-window
+switch_tab = "prefix+1..9"                     # tmux: base-index 1
+close_tab = "prefix+ampersand"                 # tmux default: & kill-window
+goto = "prefix+g"                              # closest to w/" window pickers
+
+# Panes
+split_horizontal = "prefix+s"                  # tmux: s split-window -v (stacked)
+split_vertical = "prefix+v"                    # tmux: v split-window -h (side by side)
+focus_pane_left = "prefix+h"                   # tmux: h/j/k/l select-pane
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+# prefix+prefix is reserved (sends a literal ctrl+a), so last_pane
+# lives on tab instead of the tmux ^A last-window binding.
+last_pane = "prefix+tab"
+cycle_pane_next = ""                           # freed for last_pane; hjkl covers movement
+cycle_pane_previous = ""
+zoom = "prefix+z"                              # tmux: z resize-pane -Z
+close_pane = "prefix+shift+x"                  # tmux: X kill-pane
+resize_mode = ["prefix+comma", "prefix+minus"] # tmux: , . - = resize-pane
+edit_scrollback = "prefix+e"                   # closest to copy mode
+
+# Workspaces (tmux sessions)
+workspace_picker = "prefix+shift+s"            # tmux: S choose-session
+new_workspace = "prefix+shift+n"
+rename_workspace = "prefix+shift+w"
+close_workspace = "prefix+shift+d"
+
+# Agents & worktrees
+next_agent = "prefix+a"                            # cycle agent panes
+focus_agent = "prefix+alt+1..9"
+open_notification_target = ["prefix+o", "prefix+shift+a"] # jump to agent needing attention
+new_worktree = ["prefix+ctrl+w", "prefix+shift+g"]
+open_worktree = "prefix+w"                         # worktree picker
+
+# Misc
+detach = ["prefix+ctrl+d", "prefix+d"]         # tmux: ^D detach
+reload_config = "prefix+shift+r"               # tmux: R source-file
+settings = "prefix+i"                          # moved off prefix+s (now split)
+toggle_sidebar = "prefix+b"
+help = "prefix+?"
+
+[ui]
+# tmux created windows without prompting for a name.
+prompt_new_tab_name = false
+
+[advanced]
+# tmux ran with history-limit 1000000; keep a generous scrollback here too.
+scrollback_limit_bytes = 100000000

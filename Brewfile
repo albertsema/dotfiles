@@ -2,8 +2,6 @@ tap "common-fate/granted"
 tap "felixkratz/formulae"
 tap "go-task/tap"
 tap "homebrew/bundle"
-tap "joshmedeski/sesh"
-tap "morantron/tmux-fingers"
 tap "nikitabobko/tap"
 tap "silesky/tap"
 
@@ -14,10 +12,7 @@ brew "fish"
 brew "starship"
 
 # ── Terminal multiplexer ──
-brew "tmux"
-brew "gitmux"
-brew "joshmedeski/sesh/sesh"
-brew "morantron/tmux-fingers/tmux-fingers"
+brew "herdr"
 
 # ── Languages & runtimes ──
 brew "deno"
@@ -113,7 +108,6 @@ brew "lnav"
 # ── System monitoring & utils ──
 brew "btop"
 brew "cpulimit"
-brew "herdr"
 brew "hyperfine"
 brew "terminal-notifier"
 brew "watch"
