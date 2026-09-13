@@ -8,3 +8,7 @@ debug.log
 .DS_Store
 .gitconfig.local
 .zshrc.local
+
+# herdr runtime state (~/.config/herdr symlinks to this dir)
+herdr/*
+!herdr/config.toml
