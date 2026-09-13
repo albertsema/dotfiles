@@ -213,6 +213,7 @@ link "$PWD"/bin ~/.bin
 
 # shell
 link "$PWD"/zsh ~/.config/zsh
+link "$PWD"/zsh/.zshrc ~/.zshrc
 
 # git
 link "$PWD"/.gitconfig ~/.gitconfig

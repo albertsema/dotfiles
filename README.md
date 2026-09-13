@@ -51,3 +51,17 @@ For repo-specific settings, keep the routing in `~/.gitconfig.local`:
 [includeIf "gitdir:~/personal/"]
 	path = ~/.gitconfig.personal
 ```
+
+### Local shell config:
+
+`setup` links the tracked `zsh/.zshrc` to `~/.zshrc`.
+If `~/.zshrc.local` exists, it is sourced at the very end of `.zshrc`, so it can override anything in the tracked file.
+Use it for secrets and machine-specific env vars.
+It is not committed.
+
+Example:
+
+```zsh
+export OPENAI_API_KEY="..."
+export AWS_PROFILE="work"
+```
