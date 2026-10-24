@@ -254,7 +254,6 @@ link "$PWD"/atuin/config.toml ~/.config/atuin/config.toml
 link "$PWD"/lazygit ~/.config/lazygit
 link "$PWD"/starship/starship.toml ~/.config/starship.toml
 link "$PWD"/hunk/config.toml ~/.config/hunk/config.toml
-link "$PWD"/herdr ~/.config/herdr
 
 if [[ $OSTYPE == 'darwin'* ]]; then
   install_brewfile "$PWD"/Brewfile

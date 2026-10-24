@@ -6,7 +6,7 @@
 #
 #   Docked (any external monitor connected)
 #     1 Google Chrome
-#     2 Ghostty
+#     2 Rex
 #     3 Claude + Obsidian
 #     4 Outlook + Spark
 #     5 Webex / Slack / Teams / Zoom
@@ -16,7 +16,7 @@
 #
 #   MacBook Pro only
 #     1 Google Chrome
-#     2 Ghostty
+#     2 Rex
 #     3 Obsidian
 #     4 Outlook + Zed
 #     5 Webex / Slack / Teams / Zoom
@@ -65,7 +65,7 @@ echo "Relayout: detected ${mode} mode"
 
 # Shared assignments
 move_app 'Google Chrome' 1
-move_app 'Ghostty' 2
+move_app 'Rex' 2
 move_app 'Microsoft Outlook' 4
 move_app 'Spark' 4
 move_app 'Webex' 5

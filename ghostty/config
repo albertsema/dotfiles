@@ -6,3 +6,6 @@ window-decoration = false
 macos-option-as-alt = true
 theme = Rose Pine
 keybind = global:cmd+backquote=toggle_quick_terminal
+
+# Rex is the main terminal; Ghostty only provides the quick terminal.
+initial-window = false
