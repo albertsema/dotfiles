@@ -112,6 +112,22 @@ fv() { nvim "$(find . -type f -not -path '*/.*' | fzf)" }
 
 export XDG_CONFIG_HOME="$HOME/.config"
 
+# Rex: report the working directory (OSC 7) and prompt marks (OSC 133),
+# which new tabs, worktree actions and prompt jumping rely on.
+if [[ -n $REX_BLOCK ]]; then
+  _rex_precmd() {
+    local ret=$? dir=${PWD//\%/%25}
+    (( ${+_rex_ran} )) && printf '\e]133;D;%s\e\\' $ret
+    printf '\e]7;file://%s%s\e\\' "$HOST" "${dir// /%20}"
+    printf '\e]133;A\e\\'
+  }
+  _rex_preexec() { _rex_ran=1; printf '\e]133;C\e\\' }
+  autoload -Uz add-zsh-hook
+  add-zsh-hook precmd _rex_precmd
+  add-zsh-hook preexec _rex_preexec
+fi
+
 eval "$(zoxide init zsh)"
 eval "$(atuin init zsh)"
 eval "$(direnv hook zsh)"
+eval "$(wt config shell init zsh)"
