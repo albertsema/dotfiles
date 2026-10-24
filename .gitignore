@@ -7,3 +7,7 @@ error.log
 debug.log
 .DS_Store
 .gitconfig.local
+
+# rex (written by `rex terminfo setup`)
+rex/ssh_config
+rex/terminfo-hosts

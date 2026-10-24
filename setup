@@ -219,6 +219,7 @@ link "$PWD"/.gitconfig ~/.gitconfig
 
 # terms
 link "$PWD"/ghostty ~/.config/ghostty
+link "$PWD"/rex ~/.config/rex
 
 # agents
 link "$PWD"/agents ~/.config/agents
@@ -227,6 +228,16 @@ link "$PWD"/agents/AGENTS.md ~/.claude/CLAUDE.md
 link "$PWD"/agents/AGENTS.md ~/.codex/AGENTS.md
 link "$PWD"/agents/AGENTS.md ~/.config/opencode/AGENTS.md
 link "$PWD"/agents/AGENTS.md ~/.pi/agent/AGENTS.md
+
+# rex: the app ships its CLI inside the server bundle, which exists after first launch
+rex_bin="$HOME/Library/Application Support/com.superlogical.rex/RexServer/Versions/Current/Rex Server.app/Contents/MacOS/rex"
+if [ -x "$rex_bin" ]; then
+  link "$rex_bin" ~/.local/bin/rex
+  defaults write com.superlogical.rex Workspace.darkThemeID -string petrol-lagoon
+  defaults write com.superlogical.rex Workspace.lightThemeID -string petrol-lagoon
+  "$rex_bin" terminfo setup
+  "$rex_bin" skill setup
+fi
 
 # neovim
 if which nvim; then
