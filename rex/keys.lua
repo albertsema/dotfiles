@@ -53,6 +53,9 @@ p("shift+w", "session.rename")
 p("shift+d", "session.close")
 p("shift+9", "session.previous")
 p("shift+0", "session.next")
+for i = 1, 9 do
+  rex.bind("cmd+" .. i, "session_goto", { index = i })
+end
 
 -- Agents and worktrees
 p("a", "client.sidebar.activity.toggle")

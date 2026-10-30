@@ -73,6 +73,8 @@ Press `ctrl+a ?` for the command palette, which lists every action and its short
 | `i` | settings |
 | `d` | close the window (sessions keep running) |
 
+Without the prefix, `cmd+1`..`cmd+9` go to session N, in the order `rex ls` lists them.
+
 Rex has no copy mode.
 Use mouse selection, find, prompt jumping, or `ctrl+a e` to search and yank the scrollback in Neovim.
 

@@ -75,6 +75,21 @@ rex.action{
   end,
 }
 
+rex.action{
+  name = "session_goto",
+  title = "Go to Session by Number",
+  category = "Session",
+  keywords = "session switch index number",
+  args = { index = "number" },
+  run = function(ctx, args)
+    local list, err = rex.call("session.list")
+    if list == nil then error(err, 0) end
+    local s = (list.sessions or {})[args.index]
+    if s == nil then error("No session " .. args.index, 0) end
+    rex.client.queue("session.select", { session_id = s.session_id })
+  end,
+}
+
 -- States worth jumping to, most urgent first.
 local jump_states = { "blocked", "error", "done" }
 
