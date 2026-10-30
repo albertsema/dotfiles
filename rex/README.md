@@ -7,7 +7,7 @@ It replaces herdr and tmux, and replaces Ghostty everywhere except the global qu
 
 Rex is a manual beta install (no Homebrew cask): https://www.superlogical.com/rex/docs/installation
 Launch it once, then run `./setup`.
-That links this folder to `~/.config/rex`, links the CLI to `~/.local/bin/rex`, sets the Petrol Lagoon theme, installs the `xterm-rex` terminfo and installs the Rex skill and hook for coding agents.
+That links this folder to `~/.config/rex`, links the CLI to `~/.local/bin/rex`, sets the Ink Meridian theme, installs the `xterm-rex` terminfo and installs the Rex skill and hook for coding agents.
 
 ## Mental model
 

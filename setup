@@ -256,8 +256,8 @@ merge_json "$PWD"/agents/amp/settings.json ~/.config/amp/settings.json
 rex_bin="$HOME/Library/Application Support/com.superlogical.rex/RexServer/Versions/Current/Rex Server.app/Contents/MacOS/rex"
 if [ -x "$rex_bin" ]; then
   link "$rex_bin" ~/.local/bin/rex
-  defaults write com.superlogical.rex Workspace.darkThemeID -string petrol-lagoon
-  defaults write com.superlogical.rex Workspace.lightThemeID -string petrol-lagoon
+  defaults write com.superlogical.rex Workspace.darkThemeID -string ink-meridian
+  defaults write com.superlogical.rex Workspace.lightThemeID -string ink-meridian
   "$rex_bin" terminfo setup
   "$rex_bin" skill setup
 fi
