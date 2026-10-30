@@ -76,6 +76,27 @@ run_ruby() {
   fi
 }
 
+# Deep-merge the keys of a JSON file into a settings file that the app also
+# writes to, so the repo only owns those keys and not the whole file.
+merge_json() {
+  # shellcheck disable=SC2016
+  run_ruby -rjson -rfileutils -e '
+    source, target = ARGV
+    merge = ->(a, b) { a.merge(b) { |_, x, y| x.is_a?(Hash) && y.is_a?(Hash) ? merge.(x, y) : y } }
+
+    current = File.exist?(target) ? JSON.parse(File.read(target)) : {}
+    merged = merge.(current, JSON.parse(File.read(source)))
+
+    if merged == current && File.exist?(target)
+      puts "Unchanged #{target}"
+    else
+      FileUtils.mkdir_p(File.dirname(target))
+      File.write(target, JSON.pretty_generate(merged) + "\n")
+      puts "Merged #{source} into #{target}"
+    end
+  ' "$1" "$2"
+}
+
 brew_cask_app_exists() {
   local app app_paths cask
   cask="$1"
@@ -228,6 +249,8 @@ link "$PWD"/agents/AGENTS.md ~/.claude/CLAUDE.md
 link "$PWD"/agents/AGENTS.md ~/.codex/AGENTS.md
 link "$PWD"/agents/AGENTS.md ~/.config/opencode/AGENTS.md
 link "$PWD"/agents/AGENTS.md ~/.pi/agent/AGENTS.md
+merge_json "$PWD"/agents/claude/settings.json ~/.claude/settings.json
+merge_json "$PWD"/agents/amp/settings.json ~/.config/amp/settings.json
 
 # rex: the app ships its CLI inside the server bundle, which exists after first launch
 rex_bin="$HOME/Library/Application Support/com.superlogical.rex/RexServer/Versions/Current/Rex Server.app/Contents/MacOS/rex"
