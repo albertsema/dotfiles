@@ -29,7 +29,7 @@ automatically-unhide-macos-hidden-apps = false
 # ---------------------------------------------------------------------------
 # Workspace layout (defaults to docked / external-monitor layout):
 #   1  Google Chrome
-#   2  Ghostty
+#   2  Rex
 #   3  Claude desktop + Obsidian   (docked)   |   Obsidian only (mbp)
 #   4  Outlook + Spark             (docked)   |   Outlook + Zed (mbp)
 #   5  Webex / Slack / Teams / Zoom
@@ -47,8 +47,13 @@ if.app-name-regex-substring = '(?i)google chrome'
 run = ['move-node-to-workspace 1']
 
 [[on-window-detected]]
-if.app-id = 'com.mitchellh.ghostty'
+if.app-id = 'com.superlogical.rex'
 run = ['move-node-to-workspace 2']
+
+# Ghostty is kept only for its global quick terminal (cmd+`), which floats.
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = ['layout floating']
 
 [[on-window-detected]]
 if.app-id = 'md.obsidian'
@@ -200,7 +205,7 @@ alt-shift-enter = 'mode apps'
 # App-launch shortcuts
 alt-z = 'exec-and-forget open -a /Applications/Zed.app'
 alt-o = 'exec-and-forget open -a /Applications/Obsidian.app'
-alt-g = 'exec-and-forget open -a /Applications/Ghostty.app'
+alt-g = 'exec-and-forget open -a "/Applications/Rex Beta.app"'
 alt-c = 'exec-and-forget open -a /Applications/Claude.app'
 
 

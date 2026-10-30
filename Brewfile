@@ -11,9 +11,6 @@ brew "direnv"
 brew "fish"
 brew "starship"
 
-# ── Terminal multiplexer ──
-brew "herdr"
-
 # ── Languages & runtimes ──
 brew "deno"
 brew "go"
@@ -60,6 +57,7 @@ brew "goreleaser"
 brew "gh"
 brew "hunk"
 brew "lazygit"
+brew "worktrunk"
 # gh-dash is managed as a GitHub CLI extension: gh extension install dlvhdr/gh-dash
 
 # ── File & directory CLI ──
@@ -140,6 +138,7 @@ cask "font-commit-mono-nerd-font"
 cask "font-symbols-only-nerd-font"
 
 # ── Terminal ──
+# Rex (main terminal) is a manual beta install: https://www.superlogical.com/rex/docs/installation
 cask "ghostty"
 
 # ── Window management & desktop ──
