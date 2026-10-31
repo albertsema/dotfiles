@@ -139,7 +139,6 @@ cask "font-symbols-only-nerd-font"
 
 # ── Terminal ──
 # Rex (main terminal) is a manual beta install: https://www.superlogical.com/rex/docs/installation
-cask "ghostty"
 
 # ── Window management & desktop ──
 cask "betterdisplay"

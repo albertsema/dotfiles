@@ -50,11 +50,6 @@ run = ['move-node-to-workspace 1']
 if.app-id = 'com.superlogical.rex'
 run = ['move-node-to-workspace 2']
 
-# Ghostty is kept only for its global quick terminal (cmd+`), which floats.
-[[on-window-detected]]
-if.app-id = 'com.mitchellh.ghostty'
-run = ['layout floating']
-
 [[on-window-detected]]
 if.app-id = 'md.obsidian'
 run = ['move-node-to-workspace 3']
