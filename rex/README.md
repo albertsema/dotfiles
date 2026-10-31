@@ -1,7 +1,7 @@
 # Rex
 
 [Rex](https://www.superlogical.com/rex/docs) is the main terminal and multiplexer here.
-It replaces herdr and tmux, and replaces Ghostty everywhere except the global quick terminal (cmd+`).
+It replaces herdr, tmux and Ghostty.
 
 ## Install
 

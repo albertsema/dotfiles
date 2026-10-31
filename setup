@@ -239,7 +239,6 @@ link "$PWD"/zsh ~/.config/zsh
 link "$PWD"/.gitconfig ~/.gitconfig
 
 # terms
-link "$PWD"/ghostty ~/.config/ghostty
 link "$PWD"/rex ~/.config/rex
 
 # agents
