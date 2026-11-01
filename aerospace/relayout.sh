@@ -1,29 +1,17 @@
 #!/usr/bin/env bash
-# Re-arrange running apps into the right Aerospace workspaces for the
-# currently connected displays.
+# Re-apply the Aerospace app -> workspace mapping to already-open windows.
 #
-# Layouts:
+# `on-window-detected` rules in aerospace.toml only fire for new windows.
+# Keep the table below in sync with those rules.
 #
-#   Docked (any external monitor connected)
-#     1 Google Chrome
-#     2 Rex
-#     3 Claude + Obsidian
-#     4 Outlook + Spark
-#     5 Webex / Slack / Teams / Zoom
-#     6 1Password / Cisco Secure Client
-#     7 YouTube (Chrome PWA)
-#     8 Codex + Zed
+#   1 Google Chrome            D Docker
+#   2 Rex                      M Mimestream
+#   3 Zed                      C Slack / Teams / Discord
+#   4 Claude                   T Linear
+#   5 Codex                    N Inkdrop
+#   Y YouTube (Chrome PWA)     U 1Password / Zoom / Webex
 #
-#   MacBook Pro only
-#     1 Google Chrome
-#     2 Rex
-#     3 Obsidian
-#     4 Outlook + Zed
-#     5 Webex / Slack / Teams / Zoom
-#     6 1Password / Cisco Secure Client
-#     7 YouTube (Chrome PWA)
-#     8 Claude
-#     9 Codex
+# Monitor placement is handled by workspace-to-monitor-force-assignment.
 #
 # Bound to alt-shift-r in aerospace.toml.
 
@@ -36,58 +24,35 @@ if ! command -v aerospace >/dev/null 2>&1; then
     exit 1
 fi
 
-# Move every window owned by $app_pattern (substring, regex) to $ws.
-move_app() {
-    local app_pattern="$1"
-    local ws="$2"
-    # shellcheck disable=SC2155
-    local window_ids
-    window_ids=$(aerospace list-windows --all --format '%{window-id} %{app-name}' \
-                 | awk -v pat="$app_pattern" 'tolower($0) ~ tolower(pat) { print $1 }')
-    for id in $window_ids; do
+# Matched case-insensitively against "<bundle-id> <app-name>" (regex).
+# Format: workspace|pattern
+MAPPING=(
+    '1|com\.google\.Chrome '
+    '2|com\.superlogical\.rex'
+    '3|dev\.zed\.Zed'
+    '4|com\.anthropic\.claudefordesktop'
+    '5|com\.openai\.codex'
+    'D|com\.docker\.docker|com\.electron\.dockerdesktop'
+    'M|com\.mimestream\.Mimestream'
+    'C|com\.tinyspeck\.slackmacgap|com\.microsoft\.teams2|com\.hnc\.Discord'
+    'T|com\.linear '
+    'N|info\.pkpk\.inkdrop'
+    'Y|^[^ ]+ YouTube$'
+    'U|com\.1password\.1password|us\.zoom\.xos|webex'
+)
+
+windows=$(aerospace list-windows --all --format '%{window-id} %{app-bundle-id} %{app-name}')
+
+for entry in "${MAPPING[@]}"; do
+    ws="${entry%%|*}"
+    pattern="${entry#*|}"
+    # Drop the window id column before matching, then re-attach it for the move.
+    ids=$(printf '%s\n' "$windows" \
+          | awk -v pat="$pattern" '{ id=$1; $1=""; sub(/^ /, ""); if (tolower($0) ~ tolower(pat)) print id }')
+    for id in $ids; do
         aerospace move-node-to-workspace --window-id "$id" "$ws" >/dev/null 2>&1 || true
     done
-}
-
-# A display is "external" if anything other than Built-in Retina is attached.
-external_attached() {
-    aerospace list-monitors --format '%{monitor-name}' \
-        | grep -viq 'Built-in'
-}
-
-if external_attached; then
-    mode="docked"
-else
-    mode="mbp"
-fi
-
-echo "Relayout: detected ${mode} mode"
-
-# Shared assignments
-move_app 'Google Chrome' 1
-move_app 'Rex' 2
-move_app 'Microsoft Outlook' 4
-move_app 'Spark' 4
-move_app 'Webex' 5
-move_app 'Microsoft Teams' 5
-move_app 'Slack' 5
-move_app 'zoom.us' 5
-move_app '1Password' 6
-move_app 'Cisco Secure Client' 6
-move_app '^YouTube$' 7
-
-# Mode-specific
-if [ "$mode" = "docked" ]; then
-    move_app 'Obsidian' 3
-    move_app 'Claude' 3
-    move_app 'Zed' 8
-    move_app 'Codex' 8
-else
-    move_app 'Obsidian' 3
-    move_app 'Zed' 4
-    move_app 'Claude' 8
-    move_app 'Codex' 9
-fi
+done
 
 # Refresh sketchybar (workspace indicators)
 if command -v sketchybar >/dev/null 2>&1; then

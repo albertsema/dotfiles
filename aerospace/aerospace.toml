@@ -27,23 +27,29 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 automatically-unhide-macos-hidden-apps = false
 
 # ---------------------------------------------------------------------------
-# Workspace layout (defaults to docked / external-monitor layout):
+# Workspace layout (same on Studio Display, MBP only, and 2 external displays).
+# Numbers are the work surface, letters are mnemonic.
+#
 #   1  Google Chrome
 #   2  Rex
-#   3  Claude desktop + Obsidian   (docked)   |   Obsidian only (mbp)
-#   4  Outlook + Spark             (docked)   |   Outlook + Zed (mbp)
-#   5  Webex / Slack / Teams / Zoom
-#   6  1Password / Cisco Secure Client
-#   7  YouTube (Chrome PWA)
-#   8  Codex + Zed                 (docked)   |   Claude (mbp)
-#   9  (unused docked)                        |   Codex (mbp)
+#   3  Zed
+#   4  Claude
+#   5  Codex
+#   D  Docker
+#   M  Mimestream (mail)
+#   C  Comms: Slack / Teams / Discord
+#   T  Tickets: Linear
+#   N  Notes: Inkdrop
+#   Y  YouTube (Chrome PWA)
+#   U  Utility: 1Password / Zoom / Webex
 #
-# When undocked, run `~/dotfiles/aerospace/relayout.sh` (alt-shift-r)
-# to shuffle Claude / Zed / Codex into their MBP-only slots.
+# on-window-detected only fires for new windows.
+# Run `~/dotfiles/aerospace/relayout.sh` (alt-shift-r) to re-apply the same
+# mapping to already-open windows. Keep both files in sync.
 # ---------------------------------------------------------------------------
 
 [[on-window-detected]]
-if.app-name-regex-substring = '(?i)google chrome'
+if.app-id = 'com.google.Chrome'
 run = ['move-node-to-workspace 1']
 
 [[on-window-detected]]
@@ -51,69 +57,65 @@ if.app-id = 'com.superlogical.rex'
 run = ['move-node-to-workspace 2']
 
 [[on-window-detected]]
-if.app-id = 'md.obsidian'
+if.app-id = 'dev.zed.Zed'
 run = ['move-node-to-workspace 3']
 
 [[on-window-detected]]
 if.app-id = 'com.anthropic.claudefordesktop'
-run = ['move-node-to-workspace 3']
-
-[[on-window-detected]]
-if.app-id = 'com.microsoft.Outlook'
 run = ['move-node-to-workspace 4']
-
-[[on-window-detected]]
-if.app-name-regex-substring = '(?i)spark'
-run = ['move-node-to-workspace 4']
-
-[[on-window-detected]]
-if.app-name-regex-substring = '(?i)webex'
-run = ['move-node-to-workspace 5']
-
-[[on-window-detected]]
-if.app-id = 'com.microsoft.teams2'
-run = ['move-node-to-workspace 5']
-
-[[on-window-detected]]
-if.app-name-regex-substring = '(?i)microsoft teams'
-run = ['move-node-to-workspace 5']
-
-[[on-window-detected]]
-if.app-id = 'com.tinyspeck.slackmacgap'
-run = ['move-node-to-workspace 5']
-
-[[on-window-detected]]
-if.app-id = 'us.zoom.xos'
-run = ['move-node-to-workspace 5']
-
-[[on-window-detected]]
-if.app-id = 'com.1password.1password'
-run = ['move-node-to-workspace 6']
-
-[[on-window-detected]]
-if.app-name-regex-substring = '(?i)1password'
-run = ['move-node-to-workspace 6']
-
-[[on-window-detected]]
-if.app-name-regex-substring = '(?i)cisco secure client'
-run = ['move-node-to-workspace 6']
-
-# YouTube Chrome PWA
-[[on-window-detected]]
-if.app-name-regex-substring = '^YouTube$'
-run = ['move-node-to-workspace 7']
 
 [[on-window-detected]]
 if.app-id = 'com.openai.codex'
-run = ['move-node-to-workspace 8']
+run = ['move-node-to-workspace 5']
 
 [[on-window-detected]]
-if.app-id = 'dev.zed.Zed'
-run = ['move-node-to-workspace 8']
+if.app-id = 'com.docker.docker'
+run = ['move-node-to-workspace D']
 
 [[on-window-detected]]
-if.app-name-regex-substring = '(?i)^zed$'
-run = ['move-node-to-workspace 8']
+if.app-id = 'com.electron.dockerdesktop'
+run = ['move-node-to-workspace D']
+
+[[on-window-detected]]
+if.app-id = 'com.mimestream.Mimestream'
+run = ['move-node-to-workspace M']
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = ['move-node-to-workspace C']
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.teams2'
+run = ['move-node-to-workspace C']
+
+[[on-window-detected]]
+if.app-id = 'com.hnc.Discord'
+run = ['move-node-to-workspace C']
+
+[[on-window-detected]]
+if.app-id = 'com.linear'
+run = ['move-node-to-workspace T']
+
+[[on-window-detected]]
+if.app-id = 'info.pkpk.inkdrop'
+run = ['move-node-to-workspace N']
+
+# YouTube Chrome PWA (its app-id is not stable, match by name)
+[[on-window-detected]]
+if.app-name-regex-substring = '^YouTube$'
+run = ['move-node-to-workspace Y']
+
+[[on-window-detected]]
+if.app-id = 'com.1password.1password'
+run = ['move-node-to-workspace U']
+
+[[on-window-detected]]
+if.app-id = 'us.zoom.xos'
+run = ['move-node-to-workspace U']
+
+[[on-window-detected]]
+if.app-name-regex-substring = '(?i)webex'
+run = ['move-node-to-workspace U']
 
 # Float System Settings so it doesn't disrupt tiling layouts
 [[on-window-detected]]
@@ -165,16 +167,19 @@ alt-shift-l = 'move right'
 alt-shift-minus = 'resize smart -50'
 alt-shift-equal = 'resize smart +50'
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#workspace
+# Workspaces: numbers = work surface, letters = mnemonic (see layout above)
 alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'
 alt-3 = 'workspace 3'
 alt-4 = 'workspace 4'
 alt-5 = 'workspace 5'
-alt-6 = 'workspace 6'
-alt-7 = 'workspace 7'
-alt-8 = 'workspace 8'
-alt-9 = 'workspace 9'
+alt-d = 'workspace D'
+alt-m = 'workspace M'
+alt-c = 'workspace C'
+alt-t = 'workspace T'
+alt-n = 'workspace N'
+alt-y = 'workspace Y'
+alt-u = 'workspace U'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 alt-shift-1 = 'move-node-to-workspace 1 --focus-follows-window'
@@ -182,10 +187,13 @@ alt-shift-2 = 'move-node-to-workspace 2 --focus-follows-window'
 alt-shift-3 = 'move-node-to-workspace 3 --focus-follows-window'
 alt-shift-4 = 'move-node-to-workspace 4 --focus-follows-window'
 alt-shift-5 = 'move-node-to-workspace 5 --focus-follows-window'
-alt-shift-6 = 'move-node-to-workspace 6 --focus-follows-window'
-alt-shift-7 = 'move-node-to-workspace 7 --focus-follows-window'
-alt-shift-8 = 'move-node-to-workspace 8 --focus-follows-window'
-alt-shift-9 = 'move-node-to-workspace 9 --focus-follows-window'
+alt-shift-d = 'move-node-to-workspace D --focus-follows-window'
+alt-shift-m = 'move-node-to-workspace M --focus-follows-window'
+alt-shift-c = 'move-node-to-workspace C --focus-follows-window'
+alt-shift-t = 'move-node-to-workspace T --focus-follows-window'
+alt-shift-n = 'move-node-to-workspace N --focus-follows-window'
+alt-shift-y = 'move-node-to-workspace Y --focus-follows-window'
+alt-shift-u = 'move-node-to-workspace U --focus-follows-window'
 
 alt-tab = 'workspace-back-and-forth'
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
@@ -197,11 +205,11 @@ alt-shift-r = 'exec-and-forget /Users/albertsema/dotfiles/aerospace/relayout.sh'
 alt-shift-semicolon = 'mode service'
 alt-shift-enter = 'mode apps'
 
-# App-launch shortcuts
-alt-z = 'exec-and-forget open -a /Applications/Zed.app'
-alt-o = 'exec-and-forget open -a /Applications/Obsidian.app'
-alt-g = 'exec-and-forget open -a "/Applications/Rex Beta.app"'
-alt-c = 'exec-and-forget open -a /Applications/Claude.app'
+# Multi-monitor navigation
+alt-ctrl-h = 'focus-monitor left'
+alt-ctrl-l = 'focus-monitor right'
+alt-ctrl-shift-h = ['move-node-to-monitor left', 'focus-monitor left']
+alt-ctrl-shift-l = ['move-node-to-monitor right', 'focus-monitor right']
 
 
 # 'service' binding mode declaration.
@@ -212,25 +220,37 @@ f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling
 backspace = ['close-all-windows-but-current', 'mode main']
 
 [mode.apps.binding]
-# Reserved for future per-app launchers; main launchers live in [mode.main.binding].
+# Launchers (alt-shift-enter, then a key). Window rules route each app to its workspace.
+z = ['exec-and-forget open -a /Applications/Zed.app', 'mode main']
+g = ['exec-and-forget open -a "/Applications/Rex Beta.app"', 'mode main']
+c = ['exec-and-forget open -a /Applications/Claude.app', 'mode main']
+x = ['exec-and-forget open -a /Applications/Codex.app', 'mode main']
+i = ['exec-and-forget open -a /Applications/Inkdrop.app', 'mode main']
+m = ['exec-and-forget open -a /Applications/Mimestream.app', 'mode main']
+t = ['exec-and-forget open -a /Applications/Linear.app', 'mode main']
+d = ['exec-and-forget open -a /Applications/Docker.app', 'mode main']
+s = ['exec-and-forget open -a /Applications/Slack.app', 'mode main']
+esc = 'mode main'
 
 # ---------------------------------------------------------------------------
-# Pin workspaces to physical monitors.
-#   Built-in              -> MBP Liquid Retina XDR display
-#   Apple Studio Display  -> external (matched explicitly)
-#   Any other external    -> matched by the catch-all '^(?!.*Built-in).*$'
-#                            regex (any monitor whose name isn't "Built-in"),
-#                            so any 32" monitor works regardless of brand.
-# Workspaces that are not assigned (8, 9 here) fall through to the
-# remaining monitor, so a single-display setup still gets every workspace.
+# Pin workspaces to monitors by role, not by display name.
+#   main      -> macOS primary display (set in System Settings > Displays)
+#   secondary -> any other display
+# Work surface (1-5, D, Y) lives on main, mail/comms/tickets/notes/utility
+# (M C T N U) prefer secondary. With a single display `secondary` does not
+# exist and the list falls through to `main`, so every workspace still works.
+# 2 Dells: make the left one primary.
 # ---------------------------------------------------------------------------
 [workspace-to-monitor-force-assignment]
-1 = ['Studio Display', '^(?!.*Built-in).*$', 'Built-in Retina Display']
-2 = ['Studio Display', '^(?!.*Built-in).*$', 'Built-in Retina Display']
-3 = ['Studio Display', '^(?!.*Built-in).*$', 'Built-in Retina Display']
-4 = ['Studio Display', '^(?!.*Built-in).*$', 'Built-in Retina Display']
-5 = ['Studio Display', '^(?!.*Built-in).*$', 'Built-in Retina Display']
-6 = ['Studio Display', '^(?!.*Built-in).*$', 'Built-in Retina Display']
-7 = ['Studio Display', '^(?!.*Built-in).*$', 'Built-in Retina Display']
-8 = ['Studio Display', '^(?!.*Built-in).*$', 'Built-in Retina Display']
-9 = ['Built-in Retina Display', 'Studio Display', '^(?!.*Built-in).*$']
+1 = ['main']
+2 = ['main']
+3 = ['main']
+4 = ['main']
+5 = ['main']
+D = ['main']
+Y = ['main']
+M = ['secondary', 'main']
+C = ['secondary', 'main']
+T = ['secondary', 'main']
+N = ['secondary', 'main']
+U = ['secondary', 'main']
