@@ -101,9 +101,6 @@ case "$1" in
 "qutebrowser")
   icon_result=":qute_browser:"
   ;;
-"Mattermost")
-  icon_result=":mattermost:"
-  ;;
 "Notability")
   icon_result=":notability:"
   ;;
