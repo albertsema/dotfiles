@@ -3,7 +3,7 @@
 sketchybar --add event aerospace_workspace_change
 RED=0xffed8796
 # Keep in sync with aerospace/aerospace.toml
-for sid in 1 2 3 4 5 D M C T N Y U; do
+for sid in 1 2 3 4 5 A B C D E F G; do
     sketchybar --add item "space.$sid" left \
         --subscribe "space.$sid" aerospace_workspace_change \
         --set "space.$sid" \
