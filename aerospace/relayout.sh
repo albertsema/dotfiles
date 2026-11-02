@@ -4,12 +4,12 @@
 # `on-window-detected` rules in aerospace.toml only fire for new windows.
 # Keep the table below in sync with those rules.
 #
-#   1 Google Chrome            D Docker
-#   2 Rex                      M Mimestream
+#   1 Google Chrome            A Docker
+#   2 Rex                      B Mimestream
 #   3 Zed                      C Slack / Teams / Discord
-#   4 Claude                   T Linear
-#   5 Codex                    N Inkdrop
-#   Y YouTube (Chrome PWA)     U 1Password / Zoom / Webex
+#   4 Claude                   D Linear
+#   5 Codex                    E Inkdrop
+#   F YouTube (Chrome PWA)     G 1Password / Zoom / Webex
 #
 # Monitor placement is handled by workspace-to-monitor-force-assignment.
 #
@@ -32,13 +32,13 @@ MAPPING=(
     '3|dev\.zed\.Zed'
     '4|com\.anthropic\.claudefordesktop'
     '5|com\.openai\.codex'
-    'D|com\.docker\.docker|com\.electron\.dockerdesktop'
-    'M|com\.mimestream\.Mimestream'
+    'A|com\.docker\.docker|com\.electron\.dockerdesktop'
+    'B|com\.mimestream\.Mimestream'
     'C|com\.tinyspeck\.slackmacgap|com\.microsoft\.teams2|com\.hnc\.Discord'
-    'T|com\.linear '
-    'N|info\.pkpk\.inkdrop'
-    'Y|^[^ ]+ YouTube$'
-    'U|com\.1password\.1password|us\.zoom\.xos|webex'
+    'D|com\.linear '
+    'E|info\.pkpk\.inkdrop'
+    'F|^[^ ]+ YouTube$'
+    'G|com\.1password\.1password|us\.zoom\.xos|webex'
 )
 
 windows=$(aerospace list-windows --all --format '%{window-id} %{app-bundle-id} %{app-name}')

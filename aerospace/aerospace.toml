@@ -28,20 +28,22 @@ automatically-unhide-macos-hidden-apps = false
 
 # ---------------------------------------------------------------------------
 # Workspace layout (same on Studio Display, MBP only, and 2 external displays).
-# Numbers are the work surface, letters are mnemonic.
+# Numbers are the work surface, letters A-G hold everything else.
+# Keybindings stay mnemonic (alt-d Docker, alt-m mail, ...) while the
+# workspace names stay short and ordered in the bar.
 #
 #   1  Google Chrome
 #   2  Rex
 #   3  Zed
 #   4  Claude
 #   5  Codex
-#   D  Docker
-#   M  Mimestream (mail)
+#   A  Docker
+#   B  Mimestream (mail)
 #   C  Comms: Slack / Teams / Discord
-#   T  Tickets: Linear
-#   N  Notes: Inkdrop
-#   Y  YouTube (Chrome PWA)
-#   U  Utility: 1Password / Zoom / Webex
+#   D  Tickets: Linear
+#   E  Notes: Inkdrop
+#   F  YouTube (Chrome PWA)
+#   G  Utility: 1Password / Zoom / Webex
 #
 # on-window-detected only fires for new windows.
 # Run `~/dotfiles/aerospace/relayout.sh` (alt-shift-r) to re-apply the same
@@ -70,15 +72,15 @@ run = ['move-node-to-workspace 5']
 
 [[on-window-detected]]
 if.app-id = 'com.docker.docker'
-run = ['move-node-to-workspace D']
+run = ['move-node-to-workspace A']
 
 [[on-window-detected]]
 if.app-id = 'com.electron.dockerdesktop'
-run = ['move-node-to-workspace D']
+run = ['move-node-to-workspace A']
 
 [[on-window-detected]]
 if.app-id = 'com.mimestream.Mimestream'
-run = ['move-node-to-workspace M']
+run = ['move-node-to-workspace B']
 
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
@@ -94,28 +96,28 @@ run = ['move-node-to-workspace C']
 
 [[on-window-detected]]
 if.app-id = 'com.linear'
-run = ['move-node-to-workspace T']
+run = ['move-node-to-workspace D']
 
 [[on-window-detected]]
 if.app-id = 'info.pkpk.inkdrop'
-run = ['move-node-to-workspace N']
+run = ['move-node-to-workspace E']
 
 # YouTube Chrome PWA (its app-id is not stable, match by name)
 [[on-window-detected]]
 if.app-name-regex-substring = '^YouTube$'
-run = ['move-node-to-workspace Y']
+run = ['move-node-to-workspace F']
 
 [[on-window-detected]]
 if.app-id = 'com.1password.1password'
-run = ['move-node-to-workspace U']
+run = ['move-node-to-workspace G']
 
 [[on-window-detected]]
 if.app-id = 'us.zoom.xos'
-run = ['move-node-to-workspace U']
+run = ['move-node-to-workspace G']
 
 [[on-window-detected]]
 if.app-name-regex-substring = '(?i)webex'
-run = ['move-node-to-workspace U']
+run = ['move-node-to-workspace G']
 
 # Float System Settings so it doesn't disrupt tiling layouts
 [[on-window-detected]]
@@ -167,19 +169,19 @@ alt-shift-l = 'move right'
 alt-shift-minus = 'resize smart -50'
 alt-shift-equal = 'resize smart +50'
 
-# Workspaces: numbers = work surface, letters = mnemonic (see layout above)
+# Workspaces: numbers = work surface, letters A-G (mnemonic keys, see layout above)
 alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'
 alt-3 = 'workspace 3'
 alt-4 = 'workspace 4'
 alt-5 = 'workspace 5'
-alt-d = 'workspace D'
-alt-m = 'workspace M'
+alt-d = 'workspace A'
+alt-m = 'workspace B'
 alt-c = 'workspace C'
-alt-t = 'workspace T'
-alt-n = 'workspace N'
-alt-y = 'workspace Y'
-alt-u = 'workspace U'
+alt-t = 'workspace D'
+alt-n = 'workspace E'
+alt-y = 'workspace F'
+alt-u = 'workspace G'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 alt-shift-1 = 'move-node-to-workspace 1 --focus-follows-window'
@@ -187,13 +189,13 @@ alt-shift-2 = 'move-node-to-workspace 2 --focus-follows-window'
 alt-shift-3 = 'move-node-to-workspace 3 --focus-follows-window'
 alt-shift-4 = 'move-node-to-workspace 4 --focus-follows-window'
 alt-shift-5 = 'move-node-to-workspace 5 --focus-follows-window'
-alt-shift-d = 'move-node-to-workspace D --focus-follows-window'
-alt-shift-m = 'move-node-to-workspace M --focus-follows-window'
+alt-shift-d = 'move-node-to-workspace A --focus-follows-window'
+alt-shift-m = 'move-node-to-workspace B --focus-follows-window'
 alt-shift-c = 'move-node-to-workspace C --focus-follows-window'
-alt-shift-t = 'move-node-to-workspace T --focus-follows-window'
-alt-shift-n = 'move-node-to-workspace N --focus-follows-window'
-alt-shift-y = 'move-node-to-workspace Y --focus-follows-window'
-alt-shift-u = 'move-node-to-workspace U --focus-follows-window'
+alt-shift-t = 'move-node-to-workspace D --focus-follows-window'
+alt-shift-n = 'move-node-to-workspace E --focus-follows-window'
+alt-shift-y = 'move-node-to-workspace F --focus-follows-window'
+alt-shift-u = 'move-node-to-workspace G --focus-follows-window'
 
 alt-tab = 'workspace-back-and-forth'
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
@@ -236,8 +238,8 @@ esc = 'mode main'
 # Pin workspaces to monitors by role, not by display name.
 #   main      -> macOS primary display (set in System Settings > Displays)
 #   secondary -> any other display
-# Work surface (1-5, D, Y) lives on main, mail/comms/tickets/notes/utility
-# (M C T N U) prefer secondary. With a single display `secondary` does not
+# Work surface (1-5, A, F) lives on main, mail/comms/tickets/notes/utility
+# (B C D E G) prefer secondary. With a single display `secondary` does not
 # exist and the list falls through to `main`, so every workspace still works.
 # 2 Dells: make the left one primary.
 # ---------------------------------------------------------------------------
@@ -247,10 +249,10 @@ esc = 'mode main'
 3 = ['main']
 4 = ['main']
 5 = ['main']
-D = ['main']
-Y = ['main']
-M = ['secondary', 'main']
+A = ['main']
+F = ['main']
+B = ['secondary', 'main']
 C = ['secondary', 'main']
-T = ['secondary', 'main']
-N = ['secondary', 'main']
-U = ['secondary', 'main']
+D = ['secondary', 'main']
+E = ['secondary', 'main']
+G = ['secondary', 'main']
