@@ -127,6 +127,11 @@ if [[ -n $REX_BLOCK ]]; then
   add-zsh-hook preexec _rex_preexec
 fi
 
+# Source local settings
+if [ -f ~/.zshrc.local ]; then
+    source ~/.zshrc.local
+fi
+
 eval "$(zoxide init zsh)"
 eval "$(atuin init zsh)"
 eval "$(direnv hook zsh)"
