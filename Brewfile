@@ -1,7 +1,5 @@
 tap "common-fate/granted"
 tap "felixkratz/formulae"
-tap "go-task/tap"
-tap "homebrew/bundle"
 tap "nikitabobko/tap"
 tap "silesky/tap"
 
@@ -12,18 +10,13 @@ brew "fish"
 brew "starship"
 
 # ── Languages & runtimes ──
-brew "deno"
 brew "go"
 brew "node"
-brew "python@3.14"
 brew "ruby"
-brew "rustup"
 
 # ── Package & task managers ──
 brew "uv"
 brew "yarn"
-brew "go-task/tap/go-task"
-brew "silesky/tap/node-run"
 
 # ── Editor ──
 brew "neovim"
@@ -82,8 +75,7 @@ brew "yq"
 
 # ── HTTP & network ──
 brew "curl"
-brew "httpie"
-brew "telnet"
+brew "bruno"
 brew "wget"
 
 # ── Kubernetes & cloud ──
@@ -93,6 +85,8 @@ brew "kind"
 brew "kubectx"
 brew "kubernetes-cli"
 brew "common-fate/granted/granted"
+cask "docker-desktop"
+cask "gcloud-cli"
 
 # ── Docs & reading ──
 brew "glow"
@@ -114,20 +108,12 @@ brew "watch"
 brew "gitleaks"
 brew "gnupg"
 
-# ── Media & graphics ──
-brew "graphviz"
-brew "imagemagick"
-brew "pastel"
-
 # ── Archives ──
 brew "sevenzip"
 brew "unar"
 
 # ── Shell scripting UX ──
 brew "gum"
-
-# ── Project management ──
-brew "jira-cli"
 
 # ── Desktop / window UI ──
 brew "felixkratz/formulae/borders"
@@ -146,28 +132,3 @@ cask "hiddenbar"
 cask "homerow"
 cask "keycastr"
 cask "nikitabobko/tap/aerospace"
-
-# ── Browsers ──
-cask "arc"
-
-# ── Dev tools ──
-cask "docker-desktop"
-cask "gcloud-cli"
-cask "git-credential-manager"
-cask "redis-insight"
-
-# ── Security & passwords ──
-cask "1password"
-cask "1password-cli"
-
-# ── Productivity ──
-cask "obsidian"
-cask "ticktick"
-
-# ── Communication ──
-cask "discord"
-cask "slack"
-cask "zoom"
-
-# ── Menu bar / system ──
-cask "stats"
