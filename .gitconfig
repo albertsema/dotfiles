@@ -5,7 +5,7 @@
 [pull]
 	rebase = true
 [pager]
-	diff = hunk pager
+	diff = leaf diff
 [gpg]
 	format = ssh
 [include]

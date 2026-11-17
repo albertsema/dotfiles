@@ -269,13 +269,11 @@ fi
 
 # other apps
 link "$PWD"/gh/config.yml ~/.config/gh/config.yml
-link "$PWD"/gh-dash ~/.config/gh-dash
 link "$PWD"/aerospace ~/.config/aerospace
 link "$PWD"/sketchybar ~/.config/sketchybar
 link "$PWD"/atuin/config.toml ~/.config/atuin/config.toml
 link "$PWD"/lazygit ~/.config/lazygit
 link "$PWD"/starship/starship.toml ~/.config/starship.toml
-link "$PWD"/hunk/config.toml ~/.config/hunk/config.toml
 
 if [[ $OSTYPE == 'darwin'* ]]; then
   install_brewfile "$PWD"/Brewfile

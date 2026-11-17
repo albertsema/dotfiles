@@ -20,6 +20,7 @@ brew "yarn"
 
 # ── Editor ──
 brew "neovim"
+brew "deepanshumishraa/tap/leaf"
 
 # ── Language servers ──
 brew "bash-language-server"
@@ -48,10 +49,8 @@ brew "goreleaser"
 
 # ── Git ──
 brew "gh"
-brew "hunk"
 brew "lazygit"
 brew "worktrunk"
-# gh-dash is managed as a GitHub CLI extension: gh extension install dlvhdr/gh-dash
 
 # ── File & directory CLI ──
 brew "bat"
